@@ -46,13 +46,18 @@
   
   <div class="container">
       <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Add New Profession
-          </button>
+          {% if remain_occ|length > 0 %}
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Add New Profession
+            </button>
+          {% endif %}
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             {% for occupation_name in remain_occ %}
-              <a data-toggle="modal" data-target="#{{ occupation_name[0]|lower }}_modal">{{ occupation_name[0] }}</a>
-              <!-- <a class="dropdown-item" href="{{ occupation_name[0]|lower }}_details.html">{{ occupation_name[0] }}</a> -->
+              {% if occupation_name[0]=="Tools Owner" %}
+                <a data-toggle="modal" data-target="#tools_modal">{{ occupation_name[0] }}</a>
+              {% else %}
+                <a data-toggle="modal" data-target="#{{ occupation_name[0]|lower }}_modal">{{ occupation_name[0] }}</a>
+              {% endif %}
             {% endfor %}
           </div>
         </div>
@@ -101,68 +106,88 @@
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       <h3 id="myModalLabel">
-      Modal Heading
+      Farmer Conformation
       </h4>
     </div>
     <div class="modal-body">
-    </div>
-    <div class="modal-footer">
-      <button class="btn" data-dismiss="modal">Close</button>
-      <button class="btn btn-primary">Save changes</button>
+        <form action="" method="post" class="wpcf7-form" id="farmer_res" name="farmer_res">
+          <div id="output" class="alert"></div>
+          <div class="form-meta clearfix">
+            <div class="formcol">
+              <h3>Are you sure ? </h3>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-default" name="farmer_res">Submit</button>
+          <button class="btn btn-default" name="">Cancel</button>
+        </form>
     </div>
   </div>
 
-  <div id="logistics_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div id="logistics_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="logistics_modalLabel" aria-hidden="true">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         <h3 id="myModalLabel">
-        Logistics
+        Logistics Conformation
         </h4>
       </div>
       <div class="modal-body">
           <form action="" method="post" class="wpcf7-form" id="logistics_res" name="logistics_res">
-            <div id="output" class="alert"></div>
-            <div class="form-meta clearfix">
-              <div class="formcol">
-                <label for="company_name">Company Name</label>
-                <input type="text" name="company_name" id="company_name" value="" size="40" />	
+              <div id="output" class="alert"></div>
+              <div class="form-meta clearfix">
+                <div class="formcol">
+                  <h3>Are you sure ? </h3>
+                </div>
               </div>
-              <div class="formcol">
-                <label for="pin">Area</label>
-                <select name="pin" id="pin">
-                    {% for pin, area_name in pin_area_tuple %}
-                      <option value={{ pin }}>{{ area_name }}</option>
-                    {% endfor %}
-                </select>
-              </div>
-            </div>
-            <button type="submit" class="btn btn-default" name="logistics_res">Submit</button>
-          </form>
-      </div>
-
-      </div>
-      <div class="modal-footer">
-        <button class="btn" data-dismiss="modal">Close</button>
-        <button class="btn btn-primary">Save changes</button>
+              <button type="submit" class="btn btn-default" name="logistics_res">Submit</button>
+              <button class="btn btn-default" name="">Cancel</button>
+            </form>
+        </div>
       </div>
     </div>
 
-  <div id="trader_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="tools_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="tools_modalLabel" aria-hidden="true">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         <h3 id="myModalLabel">
-        Modal Heading
+        Tools Owner Conformation
         </h4>
       </div>
       <div class="modal-body">
-  
-      </div>
-      <div class="modal-footer">
-        <button class="btn" data-dismiss="modal">Close</button>
-        <button class="btn btn-primary">Save changes</button>
+          <form action="" method="post" class="wpcf7-form" id="tools_res" name="tools_res">
+            <div id="output" class="alert"></div>
+            <div class="form-meta clearfix">
+              <div class="formcol">
+                <h3>Are you sure ? </h3>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-default" name="tools_res">Submit</button>
+            <button class="btn btn-default" name="">Cancel</button>
+          </form>
+        </div>
       </div>
     </div>
-    
+
+    <div id="trader_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="trader_modalLabel" aria-hidden="true">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h3 id="myModalLabel">
+          Trader Conformation
+          </h4>
+        </div>
+        <div class="modal-body">
+            <form action="" method="post" class="wpcf7-form" id="trader_res" name="trader_res">
+              <div id="output" class="alert"></div>
+              <div class="form-meta clearfix">
+                <div class="formcol">
+                  <h3>Are you sure ? </h3>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-default" name="trader_res">Submit</button>
+              <button class="btn btn-default" name="">Cancel</button>
+            </form>
+          </div>
+        </div>
+      </div>  
 
   <!-- Footer
     ================================================== -->

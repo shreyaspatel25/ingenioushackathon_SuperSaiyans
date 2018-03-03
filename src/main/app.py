@@ -102,23 +102,23 @@ def dashboard(username):
     if 'username' in session:
         if session['username']==username:
             if request.method=='POST':
-                if "logistics_res" in request.form:
-                    company_person = username
-                    company_name = request.form['company_name']
-                    company_pin = request.form['pin']
-                    if insertLogisticsDetails(company_person, company_name, company_pin):
-                        return "success"
-                    else:
-                        return "fail"
+                if "farmer_res" in request.form:
+                    insertOccupation(username, '01')              
+                elif "logistics_res" in request.form:
+                    insertOccupation(username, '03') 
+                elif "tools_res" in request.form:
+                    insertOccupation(username, '04') 
+                elif "trader_res" in request.form:
+                    insertOccupation(username, '02') 
+                else:
+                    pass
 
-            pin_area = extract_area()
             occupations = extract_occupations(str(username))
             rem_occupations = extract_remain_occupations(str(username))
             return render_template('dashboard.html', \
                                 occupation=occupations, \
                                 remain_occ=rem_occupations, \
                                 domain=DOMAIN, \
-                                pin_area_tuple=pin_area, \
                                 username=username)
         else:
             return redirect(DOMAIN, code=302)    
@@ -145,5 +145,26 @@ def farmer(username):
     elif session['username'] != username:
         return "Page Not Found!"
 
+@app.route('/<username>/farmer/sell',methods = ['GET'])
+def farmer(username):
+    if session['username'] == username:
+        weather_data = getWeatherData()
+        return render_template('farmer.html', \
+                            domain=DOMAIN, \
+                            username=username, \
+                            weatherdata=weather_data)
+    elif session['username'] != username:
+        return "Page Not Found!"
+
+@app.route('/<username>/farmer/crop',methods = ['GET'])
+def farmer(username):
+    if session['username'] == username:
+        weather_data = getWeatherData()
+        return render_template('farmer.html', \
+                            domain=DOMAIN, \
+                            username=username, \
+                            weatherdata=weather_data)
+    elif session['username'] != username:
+        return "Page Not Found!"
 if __name__=="__main__":
     app.run(host = '0.0.0.0', port=8080, threaded=True)

@@ -19,6 +19,23 @@ def getWeatherData():
                     forecast.low()])
     return data
 
+def insertOccupation(phone_no, id):
+    query = "INSERT INTO user_occupation (phone_no, \
+                                occupation_id)" \
+            " VALUES(%s,%s)"
+
+    values = (phone_no, id)
+    isSuccess = True
+    conn = connectionMYSQL()
+    if conn.is_connected():
+        cursor = conn.cursor()
+        cursor.execute(query, values)
+        conn.commit()
+    else:
+        isSuccess = False
+    
+    return isSuccess
+
 def extract_area():
     query = "select pin, area_name from area"
 
@@ -82,12 +99,20 @@ def insertLogisticsDetails(person_id, name, pin):
     
     values = (person_id, name, pin)
 
+    query_2 = "INSERT INTO user_occupation (phone_no, \
+                                occupation_id)" \
+            " VALUES(%s,%s)"
+    
+    values_2 = (person_id, '03')
+
     isSuccess = True
 
     conn = connectionMYSQL()
     if conn.is_connected():
         cursor = conn.cursor()
         cursor.execute(query, values)
+        conn.commit()
+        cursor.execute(query_2, values_2)
         conn.commit()
     else:
         isSuccess = False
