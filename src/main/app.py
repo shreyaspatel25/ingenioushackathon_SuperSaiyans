@@ -13,7 +13,7 @@ from weather import Weather
 
 from connectDB import *
 from authentication import *
-from extract_data import *
+from manipulate_data import *
 
 # App
 app = Flask(__name__)
@@ -101,12 +101,24 @@ def login():
 def dashboard(username):
     if 'username' in session:
         if session['username']==username:
+            if request.method=='POST':
+                if "logistics_res" in request.form:
+                    company_person = username
+                    company_name = request.form['company_name']
+                    company_pin = request.form['pin']
+                    if insertLogisticsDetails(company_person, company_name, company_pin):
+                        return "success"
+                    else:
+                        return "fail"
+
+            pin_area = extract_area()
             occupations = extract_occupations(str(username))
             rem_occupations = extract_remain_occupations(str(username))
             return render_template('dashboard.html', \
                                 occupation=occupations, \
                                 remain_occ=rem_occupations, \
                                 domain=DOMAIN, \
+                                pin_area_tuple=pin_area, \
                                 username=username)
         else:
             return redirect(DOMAIN, code=302)    
@@ -125,7 +137,11 @@ def logout(username):
 @app.route('/<username>/farmer',methods = ['GET'])
 def farmer(username):
     if session['username'] == username:
-        return render_template('farmer.html', domain=DOMAIN, username=username)
+        weather_data = getWeatherData()
+        return render_template('farmer.html', \
+                            domain=DOMAIN, \
+                            username=username, \
+                            weatherdata=weather_data)
     elif session['username'] != username:
         return "Page Not Found!"
 

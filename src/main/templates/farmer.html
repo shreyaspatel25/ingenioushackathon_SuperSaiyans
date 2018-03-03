@@ -8,6 +8,7 @@
 <meta name="author" content="">
 <!-- Le styles -->
 <link href="../static/css/bootstrap.css" rel="stylesheet">
+<link href="../static/css/bootstrap.css" rel="stylesheet">
 <link href="../static/css/bootstrap-responsive.css" rel="stylesheet">
 <link href="../static/css/docs.css" rel="stylesheet">
 <link href="../static/css/prettyPhoto.css" rel="stylesheet" type="text/css" />
@@ -114,9 +115,15 @@
 				</ul>
 				<h3> Weather Forecasting</h3>
 				<ul>
-					<li>Adobe Photoshop</li>
-					<li>Adobe Dreamweaver</li>
-					<li>HTML5/CSS3</li>
+          {% for Weather_tuple in weatherdata[:2] %}
+            <li> Date: {{ Weather_tuple[1] }}
+                <ul>
+                    <li>Weather: {{ Weather_tuple[0] }}</li>
+                    <li>High: {{ Weather_tuple[2] }}</li>
+                    <li>Low: {{ Weather_tuple[3] }}</li>    
+                </ul>    
+            </li>
+          {% endfor %}
 				</ul>
 				<h3>Government Scheme</h3>
 				<ul>
@@ -136,23 +143,23 @@
 		<div class="column">
 				<div class="price">
 					<a href="trader_des.html">
-						<img src="../static/img/farmer.jpg" alt="Farmer" width="200" height="200" hspace="50" vspace="80">
+						<img src="../static/img/sell.jpg" alt="Farmer" width="200" height="200" hspace="50" vspace="80">
 					</a>
 					<a href="trader_des.html">
-						<img src="../static/img/farmer.jpg" alt="Farmer" width="200" height="200" hspace="20" vspace="80">
+						<img src="../static/img/tools.jpg" alt="Farmer" width="200" height="200" hspace="20" vspace="80">
 					</a>
 				</div>
 				<div class="price">
 					<a href="trader_des.html">
-						<img src="../static/img/farmer.jpg" alt="Farmer" width="200" height="200" hspace="50" >
+						<img src="../static/img/quality_check.png" alt="Farmer" width="200" height="200" hspace="50" >
 					</a>
 					<a href="trader_des.html">
-						<img src="../static/img/farmer.jpg" alt="Farmer" width="200" height="200" hspace="20">
+						<img src="../static/img/crop.jpg" alt="Farmer" width="200" height="200" hspace="20">
 					</a>	
 				</div>							
 		</div>
   </div>
-  
+
   <!-- <nav>
       <ul>
         <li><a href="#">London</a></li>

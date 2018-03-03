@@ -215,7 +215,8 @@ create table make_crop_purchase_sell                                    # Table 
     crop_request_entry      int(6)             unique auto_increment,
     phone_no                char(10)           not null,                # The user who created the entry
     req_type                char(1)            not null,                # P - Purchase, S - Sell, T - Storage
-    crop_id                 int(6)             not null,                # Crop ID, select from the dropdown list of "recent" crops only to avoid the fake quality certificate
+    crop_id                 int(6),                                     # For crop sell, Crop ID, select from the dropdown list of "recent" crops only to avoid the fake quality certificate
+    crop_var_id				int(3),										# For Crop Purchase request for wholesellers
     req_pin                 char(6)            not null,                # Location of Crop, independant of user address
     crop_weight             float              not null,                # Weight in KG
     req_accepter            char(10),                                   # Phone Number of request accepter
@@ -311,6 +312,21 @@ create table tool_request                                               # Table 
     on delete cascade on update cascade
 );
 
+create table bids                                                       # Table to store auction Bids
+(
+    crop_request_entry      int(6)             not null,                # Number of Crop to be bid, only those posted bythe Farmer, check crop_var_id == NULL
+    trader_no               char(10)           not null,                # Number of the Trader who bids
+    bid_amount              int                not null     default 0,
+
+    primary key(crop_request_entry,trader_no),
+
+    foreign key(crop_request_entry) references make_crop_purchase_sell(crop_request_entry)
+    on delete cascade on update cascade,
+
+    foreign key(trader_no) references users(phone_no)
+    on delete cascade on update cascade
+);
+
 # Queries
 
 insert into states (state_id,state_name) values (01,'Gujarat');
@@ -376,8 +392,29 @@ insert into occupation (occupation_id, occupation_name) values (02,'Trader');
 insert into occupation (occupation_id, occupation_name) values (03,'Logistics');
 insert into occupation (occupation_id, occupation_name) values (04,'Tools Owner');
 
+# Test Data
 
-insert into user_occupation(phone_no, occupation_id) values('9409611733', 01);
-insert into user_occupation(phone_no, occupation_id) values('9409611733', 03);
-insert into user_occupation(phone_no, occupation_id) values('9409611733', 04);
+insert into users (phone_no, password, first_name, last_name, email_id, address_line_1, address_line_2, gender, pin, dob,online_status) 
+values ('9409611733', '12345', 'Deep', 'Patel','deepcpatel@yahoo.in', 'Eden V-302','Godrej Garden City', 'M', '382470', STR_TO_DATE('27-09-1997','%d-%m-%Y'),'Y');
+
+insert into users (phone_no, password, first_name, last_name, email_id, address_line_1, address_line_2, gender, pin, dob,online_status) 
+values ('8141724612', '12345', 'Shreyas', 'Patel','shreyasp@gmail.com', '123 Alpha one','Vastrapur', 'M', '382330', STR_TO_DATE('10-03-1997','%d-%m-%Y'),'N');
+
+insert into users (phone_no, password, first_name, last_name, email_id, address_line_1, address_line_2, gender, pin, dob,online_status) 
+values ('9409611722', '12345', 'Maunil', 'Vyas','vyasmaunil33@gmail.com', 'Kathwada Road','Naroda', 'M', '382330', STR_TO_DATE('10-11-1996','%d-%m-%Y'),'N');
+
+insert into users (phone_no, password, first_name, last_name, email_id, address_line_1, address_line_2, gender, pin, dob,online_status) 
+values ('8609618733', '12345', 'Raj', 'Derasari','rajd@gmail.com', 'Bopal','Ahmedabad', 'M', '382481', STR_TO_DATE('03-02-1997','%d-%m-%Y'),'N');
+
+insert into users (phone_no, password, first_name, last_name, email_id, address_line_1, address_line_2, gender, pin, dob,online_status) 
+values ('7989611733', '12345', 'Han', 'Solo','hansolo@starwars.space', 'Optimus','Space Ship', 'M', '382470', STR_TO_DATE('27-09-1954','%d-%m-%Y'),'N');
+
+insert into users (phone_no, password, first_name, last_name, email_id, address_line_1, address_line_2, gender, pin, dob,online_status) 
+values ('8706412734', '12345', 'Princess', 'Leia','leiap@starwars.space', 'Space','Universe', 'F', '384170', STR_TO_DATE('27-09-1956','%d-%m-%Y'),'N');
+
+
+
+select occupation_name from occupation where occupation_name not in
+    (select occupation_name from occupation natural join user_occupation where
+    occupation.occupation_id=user_occupation.occupation_id and phone_no='9409611733')
 
