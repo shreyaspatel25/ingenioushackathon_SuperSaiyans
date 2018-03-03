@@ -377,5 +377,6 @@ insert into occupation (occupation_id, occupation_name) values (03,'Logistics');
 insert into occupation (occupation_id, occupation_name) values (04,'Tools Owner');
 
 
-
+insert into user_occupation(phone_no, occupation_id) values('9409611733', 01);
+insert into user_occupation(phone_no, occupation_id) values('9409611733', 03);
 

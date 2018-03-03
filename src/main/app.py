@@ -86,12 +86,25 @@ def login():
         phone_no = request.form['phone_no']
         password = request.form['password']
 
+        session['username']=phone_no
+
         if auth_login(phone_no, password):
-            return "success"
+            return redirect(DOMAIN + session['username'] + '/dashboard', code=302)
         else:
             return render_template('login.html', \
                                 domain=DOMAIN, \
                                 info="Please enter valid username or password.")
+
+@app.route('/<username>/dashboard',methods = ['GET','POST'])
+def dashboard(username):
+    if 'username' in session:
+        if session['username']==username:
+            occupations = extract_occupations(str(username))
+            return render_template('dashboard.html', occupation=occupations)
+        else:
+            return redirect(DOMAIN, code=302)    
+    else:
+        return redirect(DOMAIN, code=302)    
 
 if __name__=="__main__":
     app.run(host = '0.0.0.0', port=8080, threaded=True)
