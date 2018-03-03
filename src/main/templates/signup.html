@@ -1,114 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
-
-  <head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Agro Portal</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="css/agro_portal.css" rel="stylesheet">
-
-    <style>
-        form {
-            margin:  auto;
-            margin: 150px 150px 400px 400px;
-            border: 1cm;
-            border-color: black
-        }
-
-        label {
-            color: #555;
-            display: inline-block;
-            margin-left: 18px;
-            padding-top: 10px;
-            font-size: 14px;
-        }
-
-        p a {
-            font-size: 11px;
-            color: #aaa;
-            float: right;
-            margin-top: -13px;
-            margin-right: 20px;
-        }
-        p a:hover {
-            color: #555;
-        }
-        input {
-            font-family: "Helvetica Neue", Helvetica, sans-serif;
-            font-size: 12px;
-            outline: none;
-        }
-        input[type=text],
-        input[type=password] {
-            color: #777;
-            padding-left: 10px;
-            margin: 10px;
-            margin-top: 12px;
-            margin-left: 18px;
-            width: 290px;
-            height: 35px;
-        }
-
-    </style>
+<head>
+<meta charset="utf-8">
+<title>Sign Up</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+<!-- Le styles -->
+<link href="../static/css/bootstrap.css" rel="stylesheet">
+<link href="../static/css/bootstrap-responsive.css" rel="stylesheet">
+<link href="../static/css/docs.css" rel="stylesheet">
+<link href="../static/css/prettyPhoto.css" rel="stylesheet" type="text/css" />
+<link href="../static/js/google-code-prettify/prettify.css" rel="stylesheet">
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+<!-- Le fav and touch icons -->
+<link rel="shortcut icon" href="../static/ico/favicon.ico">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../static/ico/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../static/ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../static/ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed" href="../static/ico/apple-touch-icon-57-precomposed.png">
 </head>
-
-  <body>
-
-    <!-- Navigation -->
-    <nav class="py-3 navbar fixed-left navbar-expand-lg navbar-dark bg-dark fixed-left">
-      <div class="container">
-        <a class="navbar-brand" href="/">Agro Portal</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="/login/">Login</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/signup/">SignUp</a>
-            </li>
-          </ul>
+<body data-spy="scroll" data-target=".bs-docs-sidebar">
+<!-- Navbar
+    ================================================== -->
+<div class="nav-agency">
+  <div class="navbar navbar-static-top"> 
+    <!-- navbar-fixed-top -->
+    <div class="navbar-inner">
+      <div class="container"> <a class="brand" href="{{ domain }}"> <img src="../static/img/Logodark.png" alt="Logo"></a>
+        <div id="main-nav">
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class=""><a href="{{ domain }}">Home</a> </li>
+            </ul>
+          </div>
         </div>
       </div>
-    </nav>
-
-    <div id="container">       
-        <form>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username">
-            <br/>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password">
-            <div id="lower">
-                <input type="checkbox"><label for="checkbox">Keep me logged in</label>
-                <input type="submit" value="Login">
-            </div><!--/ lower-->
-        </form>
     </div>
-
-    <!-- Footer -->
-    <footer class="py-4 bg-dark fixed-bottom">
-      <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
+  </div>
+</div>
+<div class="container">
+  <div class="row-fluid">
+    <div class="span12">
+      <div class="page-header">
+        <div class="row-fluid">
+          <div class="span12">
+            <h1> Sign Up</h1>
+          </div>
+        </div>
       </div>
-      <!-- /.container -->
-    </footer>
-
-    <!-- Bootstrap core JavaScript -->
-    <script src="../static/jquery/jquery.min.js"></script>
-    <script src="../static/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  </body>
-
+    </div>
+  </div>
+  <div class="row-fluid contact">
+    <div class="span4">
+      <ul class="bordered-list">
+        <li class="img-location">123 - White Street, Near Ahemedabad</li>
+        <li class="img-phone"><b>Phone:</b> +91 8734870994</li>
+        <li class="img-skype last"><b>Email:</b> agroportal@gmail.com</li>
+      </ul>
+    </div>
+    <div class="span6">
+      <div class="wpcf7" id="wpcf7-f75-t1-o1">
+        <form action="" method="post" class="wpcf7-form" id="cform" name="cform">
+          <div id="output" class="alert"> </div>
+          <div class="form-meta clearfix">
+            <div class="formcol">
+              <label for="first_name"> First Name</label>
+              <input type="text" name="first_name" value="" id="first_name" size="40" />
+			  <label for="email_id "> Email Address</label>
+              <input type="email" name="email_id" id="email_id" value="" size="40" />	
+			</div>
+            <div class="formcol">
+              <label for="last_name"> Last Name</label>
+              <input type="text" name="last_name" value="" id="last_name" size="40" />  
+			  <label for="password"> Password</label>
+              <input type="password" name="password" id="password" value="" size="40" />	
+			  </div>
+		 </div>
+		 
+		 <div class="form-meta clearfix">
+            <div class="formcol">
+			  <label for="aadhar_no"> Aadhar_No </label>
+              <input type="text" name="aadhar_no" id="aadhar_no" value="" size="40" />  
+			  <label for="address_line_1">Address_line_1</label>
+              <input type="text" name="address_line_1" id="address_line_1" value="" size="40" />
+			</div>
+            <div class="formcol">
+			  <label for="email_id "> Contact_No</label>
+              <input type="text" name="phone_no " id="phone_no" value="" size="40" />
+              <label for="address_line_2">Address_line_2</label>
+              <input type="text" name="address_line_2" id="address_line_2" value="" size="40" />
+            </div>
+		 </div>
+		 
+		 <div class="form-meta clearfix">
+            <div class="formcol">
+				<label for="">State</label>
+				<select>
+            {% for state_name in state %}
+              <option value="">{{ state_name[0] }}</option>
+            {% endfor %}
+				</select>
+				<label for="gender">Gender</label>
+				<select>
+				  <option value="M">Male</option>
+				  <option value="F">Female</option>
+				  <option value="N">Rather Not Say</option>
+				</select> 
+			</div>
+			<div class="formcol">
+				<label for="pin"> Area</label>
+				<select>
+            {% for pin, area_name in pin_area_tuple %}
+              <option value={{ pin }}>{{ area_name }}</option>
+            {% endfor %}
+				</select>
+				<label for="dob"> Date_Of_Birth</label>
+				<input type="text" name="dob" id="dob" value="" size="40" placeholder="DD-MM-YYYY"/>  	
+			</div>
+		 			
+		</div>
+		 <label for="message"></label> 
+          <!--<textarea name="message" id="message" cols="40" rows="10"></textarea>-->
+          <button type="submit" class="btn btn-success">Submit</button>
+         <!-- <label for="message"> Message</label> 
+          <textarea name="message" id="message" cols="40" rows="10"></textarea>
+          <input type="submit" id="send-message" value="Send" class="btn btn-success" /> -->
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Footer
+    ================================================== 
+<footer class="footer">
+  <div class="container">
+    <div class="row-fluid">
+      <div class="span3">
+        <h4>Navigation</h4>
+        <ul class="footer-links">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Work</a></li>
+          <li><a href="#">Elements</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Blog</a></li>
+        </ul>
+      </div>
+      <div class="span3 MT70">
+        <h4>Useful Links</h4>
+        <ul class="footer-links">
+          <li><a href="#">eGrappler.com</a></li>
+          <li><a href="#">Greepit.com</a></li>
+          <li><a href="#">WordPress.com</a></li>
+          <li><a href="#">ThemeForest.net</a></li>
+          <li><a href="#">Free Vector Icons</a></li>
+        </ul>
+      </div>
+      <div class="span3 MT70">
+        <h4>Something from Flickr</h4>
+        <div id="flickr-wrapper"> 
+          <script type="text/javascript" src="http://www.flickr.com/badge_code_v2.gne?count=8&amp;display=latest&amp;size=s&amp;layout=x&amp;source=user&amp;user=10133335@N08"></script> 
+        </div>
+      </div>
+      <div class="span3 MT70">
+        <h4>Who We Are</h4>
+        <p>We are a creative production studio specialising in all things digital. Find us, connect & collaborate.</p>
+        <ul class="footer_social clearfix">
+          <li><a href="#" class="footer_facebook">Facebook</a></li>
+          <li><a href="#" class="footer_twitter">Twitter</a></li>
+          <li><a href="#" class="footer_googleplus">Google+</a></li>
+          <li><a href="#" class="footer_rss">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+    <hr class="soften1 copyhr">
+    <div class="row-fluid copyright">
+      <div class="span12">Copyright &copy; 2012. Greepit.com</div>
+    </div>
+  </div>
+</footer>
+-->
+<!-- Le javascript
+    ================================================== --> 
+<!-- Placed at the end of the document so the pages load faster --> 
+<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script> 
+<script src="../static/js/jquery.js"></script> 
+<script src="../static/js/google-code-prettify/prettify.js"></script> 
+<script src="../static/js/bootstrap-transition.js"></script> 
+<script src="../static/js/bootstrap-alert.js"></script> 
+<script src="../static/js/bootstrap-modal.js"></script> 
+<script src="../static/js/bootstrap-dropdown.js"></script> 
+<script src="../static/js/bootstrap-scrollspy.js"></script> 
+<script src="../static/js/bootstrap-tab.js"></script> 
+<script src="../static/js/bootstrap-tooltip.js"></script> 
+<script src="../static/js/bootstrap-popover.js"></script> 
+<script src="../static/js/bootstrap-button.js"></script> 
+<script src="../static/js/bootstrap-collapse.js"></script> 
+<script src="../static/js/bootstrap-carousel.js"></script> 
+<script src="../static/js/bootstrap-typeahead.js"></script> 
+<script src="../static/js/bootstrap-affix.js"></script> 
+<script src="../static/js/application.js"></script> 
+<script src="../static/js/contact.js" type="text/javascript"></script> 
+<script src="../static/js/superfish.js" type="text/javascript"></script> 
+<script src="../static/js/custom.js" type="text/javascript"></script>
+</body>
 </html>

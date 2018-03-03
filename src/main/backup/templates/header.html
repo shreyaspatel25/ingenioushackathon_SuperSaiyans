@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Agro Portal</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../static/css/agro_portal.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar fixed-left navbar-expand-lg navbar-dark bg-dark fixed-left">
+      <div class="container">
+        <a class="navbar-brand" href="/">Agro Portal</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/signup">SignUp</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container-fluid">  
+        <!-- Content Row -->
+        <div class="row">
+          <!-- Sidebar Column -->
+          <div class="col-sm-3 mb-4 mt-3">
+            <div class="list-group">
+              <a href="/" class="list-group-item">Home</a>
+              <a href="/about" class="list-group-item">About</a>
+              <a href="/services" class="list-group-item">Services</a>
+              <a href="/contact" class="list-group-item">Contact</a>
+          </div>
+          </div>
+          <!-- Content Column -->
+          <div class="col-sm-9 mb-4 mt-3">
+              {% block content %}
+              <h1>{{ title }}</h1>
+              {% endblock %}
+          </div>
+        </div>
+        <!-- /.row -->  
+      </div>
+      <!-- /.container -->
+  
+    <!-- Footer -->
+    <footer class="py-4 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="../static/jquery/jquery.min.js"></script>
+    <script src="../static/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  </body>
+
+</html>

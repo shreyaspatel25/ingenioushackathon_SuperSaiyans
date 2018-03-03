@@ -9,7 +9,12 @@ sys.path.append('./dependancies/')
 sys.setdefaultencoding('utf-8')
 
 from flask import Flask, render_template, request, redirect, session
-from connectDB import connectionMYSQL
+from connectDB import *
+from authentication import *
+from extract_data import *
+
+# App
+app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'agro'
 
@@ -26,39 +31,54 @@ def index():
 #### SignUP Page
 @app.route('/signup',methods = ['GET','POST'])
 def signup():
-   if request.method == 'GET':
+    if request.method == 'GET':
         if 'username' in session:
             return redirect(DOMAIN + session['username'], code=302)
         else:
-            return render_template('signup.html')
+            pin_area = extract_area()
+            states = extract_state()
+            return render_template('signup.html', pin_area_tuple=pin_area, state=states)
+
     elif request.method == 'POST':
-        
-        email = request.form['email']
-        username = request.form['username']
-        password = request.form['password']
-        confirmpassword = request.form['confirmPassword']
+        user_data = {}
+        user_data['phone_no'] = request.form['phone_no']
+        user_data['password'] = request.form['password']
+        user_data['first_name'] = request.form['first_name']
+        user_data['last_name'] = request.form['last_name']
+        user_data['email_id'] = request.form['email_id']
+        user_data['address_line_1'] = request.form['address_line_1']
+        user_data['address_line_2'] = request.form['address_line_2']
+        user_data['gender'] = request.form['gender']
+        user_data['pin'] = request.form['pin']
+        user_data['aadhar_no'] = request.form['aadhar_no']
+        user_data['dob'] = request.form['dob']
+        user_data['online_status'] = '0'
 
-        errors = validateRegistration(email,username,password,confirmpassword);
+        isSuccess = registration(user_data)
 
-        if len(errors) == 0:
-            m = hashlib.sha256()
-            #d = bytes(str(datetime.datetime.now()),'utf-8')
-            d = bytes(str(datetime.datetime.now()))
-            m.update(d)
-            key = m.hexdigest()
-            isSuccess = register(email,username,password,key)
-            body = "Click on the following link to activate your account..! \n" \
-                     + domain + "activate" + "?email=" + email + "&id=" + key
-            subject = "Activate Your Account"
-            mail(email,body,subject)    
-            if isSuccess:
-                return redirect(domain + "congratulation?success=register", code=302)
-            else:
-                return "Error"
+        if isSuccess:
+            return "Success"
         else:
-            return render_template('SignUp.html',errors = errors)
+            return "Error"
+    else:
+        return render_template('signup.html')
 
-    return render_template('signup.html')
+@app.route('/login', methods = ['GET','POST'])
+def login():
+    if request.method == 'GET':
+        if 'username' in session:
+            return redirect(DOMAIN + session['username'] + '/dashboard', code=302)
+        return render_template('login.html', domain=DOMAIN)
+    elif request.method == 'POST':
+        phone_no = request.form['phone_no']
+        password = request.form['password']
+
+        if auth_login(phone_no, password):
+            return "success"
+        else:
+            return render_template('login.html', \
+                                domain=DOMAIN, \
+                                error="Please enter valid username or password")
 
 if __name__=="__main__":
     app.run(host = '0.0.0.0', port=8080, threaded=True)
