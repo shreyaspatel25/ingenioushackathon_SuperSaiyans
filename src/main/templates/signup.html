@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Agro Portal</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/agro_portal.css" rel="stylesheet">
+
+    <style>
+        form {
+            margin:  auto;
+            margin: 150px 150px 400px 400px;
+            border: 1cm;
+            border-color: black
+        }
+
+        label {
+            color: #555;
+            display: inline-block;
+            margin-left: 18px;
+            padding-top: 10px;
+            font-size: 14px;
+        }
+
+        p a {
+            font-size: 11px;
+            color: #aaa;
+            float: right;
+            margin-top: -13px;
+            margin-right: 20px;
+        }
+        p a:hover {
+            color: #555;
+        }
+        input {
+            font-family: "Helvetica Neue", Helvetica, sans-serif;
+            font-size: 12px;
+            outline: none;
+        }
+        input[type=text],
+        input[type=password] {
+            color: #777;
+            padding-left: 10px;
+            margin: 10px;
+            margin-top: 12px;
+            margin-left: 18px;
+            width: 290px;
+            height: 35px;
+        }
+
+    </style>
+</head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="py-3 navbar fixed-left navbar-expand-lg navbar-dark bg-dark fixed-left">
+      <div class="container">
+        <a class="navbar-brand" href="/">Agro Portal</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/login/">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/signup/">SignUp</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div id="container">       
+        <form>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username">
+            <br/>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+            <div id="lower">
+                <input type="checkbox"><label for="checkbox">Keep me logged in</label>
+                <input type="submit" value="Login">
+            </div><!--/ lower-->
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-4 bg-dark fixed-bottom">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="../static/jquery/jquery.min.js"></script>
+    <script src="../static/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  </body>
+
+</html>
