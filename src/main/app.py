@@ -37,7 +37,10 @@ def signup():
         else:
             pin_area = extract_area()
             states = extract_state()
-            return render_template('signup.html', pin_area_tuple=pin_area, state=states)
+            return render_template('signup.html', \
+                                    domain=DOMAIN , \
+                                    pin_area_tuple=pin_area, \
+                                    state=states)
 
     elif request.method == 'POST':
         user_data = {}
@@ -51,17 +54,27 @@ def signup():
         user_data['gender'] = request.form['gender']
         user_data['pin'] = request.form['pin']
         user_data['aadhar_no'] = request.form['aadhar_no']
-        user_data['dob'] = request.form['dob']
-        user_data['online_status'] = '0'
+        user_data['dob'] = '29-05-1997'
+        user_data['online_status'] = 'N'
 
         isSuccess = registration(user_data)
 
         if isSuccess:
-            return "Success"
+            return render_template('login.html', \
+                                    domain=DOMAIN, \
+                                    info="Please login with your details.")
         else:
-            return "Error"
+            return render_template('signup.html', \
+                                    domain=DOMAIN, \
+                                    info="Please try again.")
     else:
-        return render_template('signup.html')
+        pin_area = extract_area()
+        states = extract_state()
+        return render_template('signup.html', \
+                                domain=DOMAIN , \
+                                pin_area_tuple=pin_area, \
+                                state=states, \
+                                info="")
 
 @app.route('/login', methods = ['GET','POST'])
 def login():
@@ -78,7 +91,7 @@ def login():
         else:
             return render_template('login.html', \
                                 domain=DOMAIN, \
-                                error="Please enter valid username or password")
+                                info="Please enter valid username or password.")
 
 if __name__=="__main__":
     app.run(host = '0.0.0.0', port=8080, threaded=True)

@@ -56,7 +56,7 @@ create table users                                                      # Store 
     gender                  char(1)            not null,                # Give radio button option
     pin                     char(6)            not null,
     dob                     date,
-    aadhar_no               int(12),
+    aadhar_no               char(12),
     online_status           char(1)            not null    default 'N',  # Y/N
     
     primary key(phone_no),
@@ -146,6 +146,28 @@ create table logistics_company                                          # Logist
     on delete cascade on update cascade,
     
     foreign key(company_pin) references area(pin)
+    on delete cascade on update cascade    
+);
+
+create table occupation
+(
+    occupation_id           int(2)            not null,
+    occupation_name         varchar(20)       not null,
+
+    primary key(occupation_id)
+);
+
+create table user_occupation
+(
+    phone_no                char(10)          not null,
+    occupation_id           int(2)            not null,
+
+    primary key(phone_no, occupation_id),
+
+    foreign key(phone_no) references users(phone_no)
+    on delete cascade on update cascade,
+    
+    foreign key(occupation_id) references occupation(occupation_id)
     on delete cascade on update cascade    
 );
 
@@ -349,6 +371,10 @@ insert into crop_variety (crop_var_id, crop_name, crop_type) values (006,'Rice',
 insert into crop_variety (crop_var_id, crop_name, crop_type) values (007,'Wheat','GW 173');
 insert into crop_variety (crop_var_id, crop_name, crop_type) values (008,'Wheat','Raj 3037');
 
+insert into occupation (occupation_id, occupation_name) values (01,'Farmer');
+insert into occupation (occupation_id, occupation_name) values (02,'Trader');
+insert into occupation (occupation_id, occupation_name) values (03,'Logistics');
+insert into occupation (occupation_id, occupation_name) values (04,'Tools Owner');
 
 
 

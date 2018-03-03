@@ -64,6 +64,7 @@
     </div>
     <div class="span6">
       <div class="wpcf7" id="wpcf7-f75-t1-o1">
+        <p>{{ info }}</p>
         <form action="" method="post" class="wpcf7-form" id="cform" name="cform">
           <div id="output" class="alert"> </div>
           <div class="form-meta clearfix">
@@ -89,8 +90,8 @@
               <input type="text" name="address_line_1" id="address_line_1" value="" size="40" />
 			</div>
             <div class="formcol">
-			  <label for="email_id "> Contact_No</label>
-              <input type="text" name="phone_no " id="phone_no" value="" size="40" />
+			  <label for="phone_no"> Contact_No</label>
+              <input type="text" name="phone_no" id="phone_no" value="" size="40" />
               <label for="address_line_2">Address_line_2</label>
               <input type="text" name="address_line_2" id="address_line_2" value="" size="40" />
             </div>
@@ -98,22 +99,22 @@
 		 
 		 <div class="form-meta clearfix">
             <div class="formcol">
-				<label for="">State</label>
-				<select>
+				<label for="state">State</label>
+				<select name="state" id="state">
             {% for state_name in state %}
               <option value="">{{ state_name[0] }}</option>
             {% endfor %}
 				</select>
 				<label for="gender">Gender</label>
-				<select>
-				  <option value="M">Male</option>
+				<select name="gender" id="gender">
+				  <option value="M" selected>Male</option>
 				  <option value="F">Female</option>
 				  <option value="N">Rather Not Say</option>
 				</select> 
 			</div>
 			<div class="formcol">
 				<label for="pin"> Area</label>
-				<select>
+				<select name="pin" id="pin">
             {% for pin, area_name in pin_area_tuple %}
               <option value={{ pin }}>{{ area_name }}</option>
             {% endfor %}
@@ -123,7 +124,6 @@
 			</div>
 		 			
 		</div>
-		 <label for="message"></label> 
           <!--<textarea name="message" id="message" cols="40" rows="10"></textarea>-->
           <button type="submit" class="btn btn-success">Submit</button>
          <!-- <label for="message"> Message</label> 
