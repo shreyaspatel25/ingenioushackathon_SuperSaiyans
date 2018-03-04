@@ -233,11 +233,98 @@ def insertBid(crop_request_entry, trader_no, bid_amount):
         isSuccess = False
     
     return isSuccess  
+
+def perform_AUCTION():
+    query = "select * from (bids natural join (select crop_request_entry, \
+    max(bid_amount) as bid_amount from bids group by crop_request_entry) as a)"
+
+    isSuccess = False
+
+    conn = connectionMYSQL()
+    if conn.is_connected():
+        cursor = conn.cursor()
+        cursor.execute(query)
+        l = cursor.fetchall()
+        conn.commit()
+        for crop_request_entry, bid_amount, trader_no in l:
+            sub_query = "update make_crop_purchase_sell set req_accepter=%s, \
+            accept_price=%s where crop_request_entry=%s"
+
+            sub_values = (crop_request_entry, bid_amount, trader_no)            
+            cursor.execute(sub_query, sub_values)
+            conn.commit()
+
+            sub_query = "delete from bids where crop_request_entry=%s and trader_no=%s"
+            sub_values = (crop_request_entry, trader_no)            
+            cursor.execute(sub_query, sub_values)
+            conn.commit()
+
+        sub_query = "select * from bids"
+        cursor.execute(sub_query)
+        l = cursor.fetchall()
+        conn.commit()
+        for crop_request_entry, trader_no, bid_amount in l:
+            sub_query = "delete from bids where crop_request_entry=%s and trader_no=%s"
+            sub_values = (crop_request_entry, trader_no)            
+            cursor.execute(sub_query, sub_values)
+            conn.commit()
+        isSuccess = True
+    return isSuccess    
+
+def farmer_notification(username):
+    query="select x.phone_no, x.first_name, x.last_name, x.pin, y.accept_price, y.crop_request_entry from (select * from users) as x join (select req_accepter, accept_price, crop_request_entry from \
+    make_crop_purchase_sell where phone_no=%s and req_accepter is not null and req_type='S') as y where x.phone_no=y.req_accepter"
+
+    values=(username,)
+
+    conn = connectionMYSQL()
+    if conn.is_connected():
+        cursor = conn.cursor()
+        cursor.execute(query, values)
+        l = cursor.fetchall()
+        return l
+    else:
+        return []
+
+def send_shipment_request(crop_request_entry, \
+    src_person, src_addr, src_pin, w_price, dest_person, dest_addr, dest_pin):
+
+    query="insert into crop_shipment_request (crop_request_entry, src_person, \
+    src_addr, src_pin, w_price, dest_person, dest_addr, dest_pin) \
+    values (%s, %s, %s, %s, %s, %s, %s, %s)"
+
+    values=(crop_request_entry, src_person, src_addr, src_pin, w_price, dest_person, dest_addr, dest_pin)
+
+    isSuccess = True
+    conn = connectionMYSQL()
+    if conn.is_connected():
+        cursor = conn.cursor()
+        cursor.execute(query, values)
+        conn.commit()
+    else:
+        isSuccess = False
     
+    return isSuccess  
+
+def extract_userdetails(username):
+    query="select * from users where phone_no=%s"
+    values = (username,)
+
+    conn = connectionMYSQL()
+    if conn.is_connected():
+        cursor = conn.cursor()
+        cursor.execute(query, values)
+        l = cursor.fetchall()
+        return l
+    else:
+        return []    
 
 if __name__=="__main__":
     # print extract_area()
     # print extract_occupations('9409611733')
     # print extract_remain_occupations('9409611733')
     # print getWeatherData()
-    print extract_soldData()
+    # print extract_soldData()
+    # print perform_AUCTION()
+    print farmer_notification('9409611733')
+    print extract_userdetails('9409611733')[0][5]

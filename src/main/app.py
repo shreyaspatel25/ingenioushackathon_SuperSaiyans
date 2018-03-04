@@ -171,12 +171,38 @@ def trader(username):
         return "Page Not Found!"
 
 
-@app.route('/<username>/farmer/notifications', methods=['GET'])
+@app.route('/<username>/farmer/notifications', methods=['GET','POST'])
 def farmer_notifications(username):
-    
-    return render_template('notifications.html',
-                                domain=DOMAIN,
-                                username=username)
+    if session['username']==username:
+        farmer_notif = farmer_notification(username)
+        info=""
+
+        if request.method=='POST':
+            crop_request_entry = request.form['crop_request_entry']
+            src_person = username
+            dest_person = request.form['dest_person']
+            w_price = request.form['w_price']
+
+            src = extract_userdetails(username)
+            des = extract_userdetails(dest_person)
+
+            src_addr = str(src[0][5]) + str(src[0][6])
+            src_pin = str(src[0][8])
+            dest_addr = str(des[0][5]) + str(des[0][6])
+            dest_pin = str(des[0][8])
+
+            if send_shipment_request(crop_request_entry,src_person, src_addr, src_pin, w_price, dest_person, dest_addr, dest_pin):
+                info="Shipment request made successfully"
+            else:
+                info="Please try again"
+
+        return render_template('notifications.html',
+                                    domain=DOMAIN,
+                                    username=username,
+                                    farmer_notif=farmer_notif,
+                                    info=info)
+    else:
+        return "Fail"
 
 @app.route('/<username>/trader/notifications', methods=['GET'])
 def trader_notifications(username):

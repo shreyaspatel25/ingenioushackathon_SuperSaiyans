@@ -491,3 +491,13 @@ insert into questions(q_statement) values ("How many times did you gave phospate
 # 1). Auction
 
 select * from (bids natural join (select crop_request_entry, max(bid_amount) as bid_amount from bids group by crop_request_entry) as a);
+
+update make_crop_purchase_sell set req_accepter='8141724612',accept_price=1234 where crop_request_entry=4 
+
+insert into crop_shipment_request (crop_request_entry, src_person, src_addr, src_pin, w_price, dest_person, dest_addr, dest_pin)
+values (4, '9409611733', 'Digvijaynagar', '382470', 45, '8141724612', 'Swapna Srushti', '382330');
+
+select x.phone_no, x.first_name, x.last_name, x.pin, y.accept_price, y.crop_request_entry from (select * from users) as x join (select req_accepter, accept_price, crop_request_entry from make_crop_purchase_sell where phone_no='9409611733' 
+and req_accepter is not null and req_type='S') as y where x.phone_no=y.req_accepter;
+
+select * from users where phone_no='9409611733'
