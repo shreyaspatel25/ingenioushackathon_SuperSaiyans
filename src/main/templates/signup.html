@@ -34,7 +34,7 @@
         <div id="main-nav">
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class=""><a href="{{ domain }}">Home</a> </li>
+              <li class=""><a href="{{ domain }}">હોમ</a> </li>
             </ul>
           </div>
         </div>
@@ -48,7 +48,7 @@
       <div class="page-header">
         <div class="row-fluid">
           <div class="span12">
-            <h1> Sign Up</h1>
+            <h1> સાઇન અપ કરો</h1>
           </div>
         </div>
       </div>
@@ -57,9 +57,9 @@
   <div class="row-fluid contact">
     <div class="span4">
       <ul class="bordered-list">
-        <li class="img-location">123 - White Street, Near Ahemedabad</li>
-        <li class="img-phone"><b>Phone:</b> +91 8734870994</li>
-        <li class="img-skype last"><b>Email:</b> agroportal@gmail.com</li>
+        <li class="img-location">123 - વ્હાઇટ સ્ટ્રીટ, અમદાવાદ નજીક</li>
+        <li class="img-phone"><b>ફોન:</b> +91 8734870994</li>
+        <li class="img-skype last"><b>ઇમેઇલ:</b> agroportal@gmail.com</li>
       </ul>
     </div>
     <div class="span6">
@@ -69,57 +69,63 @@
           <div id="output" class="alert"> </div>
           <div class="form-meta clearfix">
             <div class="formcol">
-              <label for="first_name"> First Name</label>
+              <label for="first_name"> 
+પ્રથમ નામ</label>
               <input type="text" name="first_name" value="" id="first_name" size="40" />
-			  <label for="email_id "> Email Address</label>
+			  <label for="email_id "> 
+ઈ - મેઈલ સરનામું</label>
               <input type="email" name="email_id" id="email_id" value="" size="40" />	
 			</div>
             <div class="formcol">
-              <label for="last_name"> Last Name</label>
+              <label for="last_name"> 
+છેલ્લું નામ</label>
               <input type="text" name="last_name" value="" id="last_name" size="40" />  
-			  <label for="password"> Password</label>
+			  <label for="password"> પાસવર્ડ</label>
               <input type="password" name="password" id="password" value="" size="40" />	
 			  </div>
 		 </div>
 		 
 		 <div class="form-meta clearfix">
             <div class="formcol">
-			  <label for="aadhar_no"> Aadhar_No </label>
+			  <label for="aadhar_no"> આધાર નંબર</label>
               <input type="text" name="aadhar_no" id="aadhar_no" value="" size="40" />  
-			  <label for="address_line_1">Address_line_1</label>
+			  <label for="address_line_1">
+સરનામું1</label>
               <input type="text" name="address_line_1" id="address_line_1" value="" size="40" />
 			</div>
             <div class="formcol">
-			  <label for="phone_no"> Contact_No</label>
+			  <label for="phone_no"> 
+સંપર્ક નંબર</label>
               <input type="text" name="phone_no" id="phone_no" value="" size="40" />
-              <label for="address_line_2">Address_line_2</label>
+              <label for="address_line_2">સરનામું2</label>
               <input type="text" name="address_line_2" id="address_line_2" value="" size="40" />
             </div>
 		 </div>
 		 
 		 <div class="form-meta clearfix">
             <div class="formcol">
-				<label for="state">State</label>
+				<label for="state">રાજ્ય</label>
 				<select name="state" id="state">
             {% for state_name in state %}
               <option value="">{{ state_name[0] }}</option>
             {% endfor %}
 				</select>
-				<label for="gender">Gender</label>
+				<label for="gender">
+જાતિ</label>
 				<select name="gender" id="gender">
-				  <option value="M" selected>Male</option>
-				  <option value="F">Female</option>
-				  <option value="N">Rather Not Say</option>
+				  <option value="M" selected>પુરૂષ</option>
+				  <option value="F">સ્ત્રી</option>
+				  <option value="N">અન્ય</option>
 				</select> 
 			</div>
 			<div class="formcol">
-				<label for="pin"> Area</label>
+				<label for="pin"> વિસ્તાર</label>
 				<select name="pin" id="pin">
             {% for pin, area_name in pin_area_tuple %}
               <option value={{ pin }}>{{ area_name }}</option>
             {% endfor %}
 				</select>
-				<label for="dob"> Date_Of_Birth</label>
+				<label for="dob"> જન્મ તારીખ</label>
 				<input type="text" name="dob" id="dob" value="" size="40" placeholder="DD-MM-YYYY"/>  	
 			</div>
 		 			

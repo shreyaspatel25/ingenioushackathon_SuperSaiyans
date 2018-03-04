@@ -240,6 +240,25 @@ def sell(username):
     else:
         return render_template('sell.html')
 
+@app.route('/<username>/farmer/warehouse',methods = ['GET','POST'])
+def warehouse(username):
+    if session['username']==username:
+        return render_template('warehouse.html',
+                                domain=DOMAIN,
+                                username=username)        
+    else:
+        return redirect(DOMAIN)
+
+@app.route('/<username>/farmer/q_a',methods = ['GET','POST'])
+def q_a(username):
+    if session['username']==username:
+        return render_template('q_a.html',
+                                domain=DOMAIN,
+                                username=username)        
+    else:
+        return redirect(DOMAIN)
+
+
 @app.route('/<username>/<type>/crop',methods = ['GET','POST'])
 def crop(username, type):
     if type!="farmer":

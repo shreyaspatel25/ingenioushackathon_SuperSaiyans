@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Selling Details</title>
+<title>વેચાણ વિગતો</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -52,8 +52,7 @@
         <div id="main-nav">
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class=""><a href="{{ domain }}{{ username }}">Home</a> </li>
-              <li class=""><a href="{{ domain }}{{ username }}/trader/notifications">Notifications</a> </li>
+              <li class=""><a href="{{ domain }}{{ username }}">હોમ</a> </li>
             </ul>
           </div>
         </div>
@@ -67,7 +66,7 @@
       <div class="page-header">
         <div class="row-fluid">
           <div class="span4">
-            <h1>Trader</h1>
+            <h1>વેપારી</h1>
           </div>
           <div class="span8">
               <h1>{{ info }}</h1>
@@ -80,20 +79,21 @@
   <div class="row-fluid contact">  
 	<div class="span4">
 	  <ul class="bordered-list">
-        <li>Client No:</b>{{ username }}</li>	
+        <li>ક્લાયન્ટ નં:</b>{{ username }}</li>	
+        <li><a href="">સૂચનાઓ</a></li>
       </ul>
     </div>
     <div class="span8">
       <div class="wpcf7" id="wpcf7-f75-t1-o1">
           <table id="t01">
             <tr>
-              <th>Phone no</th>
-              <th>Crop Name</th> 
-              <th>Crop Type</th>
-              <th>Crop Weight</th>
-              <th>Crop Harvest Date</th>
-              <th>Reserve Price</th>
-              <th>Bid</th>
+              <th>ફોન નં</th>
+              <th>પાકનું નામ</th> 
+              <th>પાક પ્રકાર</th>
+              <th>પાક વજન</th>
+              <th>પાક હાર્વેસ્ટ તારીખ</th>
+              <th>રિઝર્વ પ્રાઈસ</th>
+              <th>બોલી</th>
             </tr>
             {% for no, crop_req, name,type,weight,date,price in sold_Data %}
               <tr>
@@ -103,7 +103,7 @@
                 <td>{{ weight }}</td>
                 <td>{{ date }}</td>
                 <td>{{ price }}</td>
-                <td><a data-toggle="modal" data-target="#bid_model_{{ crop_req }}">Click</a></td>
+                <td><a data-toggle="modal" data-target="#bid_model">ક્લિક કરો</a></td>
               </tr>
             {% endfor %}
           </table>
@@ -112,12 +112,11 @@
   </div>
 </div>
 
-{% for no, crop_req, name,type,weight,date,price in sold_Data %}
-<div id="bid_model_{{ crop_req }}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="bidLabel" aria-hidden="true">
+<div id="bid_model" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="bidLabel" aria-hidden="true">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       <h3 id="myModalLabel">
-      Bidding
+      બિડિંગ
       </h4>
     </div>
     <div class="modal-body">
@@ -125,20 +124,17 @@
           <div id="output" class="alert"></div>
           <div class="form-meta clearfix">
             <div class="formcol">
-                <label for="crop_request_entry"></label>
-                <input type="hidden" name="crop_request_entry" id="crop_request_entry" value={{ crop_req }}></input>
-                <p>Your Phone No: {{ username }}</p>
-                <label for="bid_amount"> Please add bid amount: </label>
-                <input type="text" name="bid_amount" id="bid_amount" value="" size="40" />  
+                <label for="aadhar_no"> આધાર નં </label>
+                <input type="text" name="aadhar_no" id="aadhar_no" value="" size="40" />  
+                <label for="address_line_1">સરનામું_લાઇન_1</label>
+                <input type="text" name="address_line_1" id="address_line_1" value="" size="40" />                
             </div>
           </div>
-          <button type="submit" class="btn btn-default" name="bid_res">Submit</button>
+          <button type="submit" class="btn btn-default" name="bid_res">સબમિટ કરો</button>
+          <button class="btn btn-default" name="">રદ કરો</button>
         </form>
     </div>
   </div>
-{% endfor %}
-
-
 
  <!-- Footer
     ================================================== -->
@@ -146,7 +142,7 @@
         <div class="container">
           <div class="row-fluid copyright ">
             <center>
-                <div class="span12">Copyright &copy; 2018. agro.com</div>
+                <div class="span12">કૉપિરાઇટ &copy; 2018. agro.com</div>
             </center>
           </div>
         </div>

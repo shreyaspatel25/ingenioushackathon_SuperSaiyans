@@ -1,21 +1,23 @@
 drop schema agro_system;
 
 create database agro_system;
+	##%character set utf8
+	#%#collate utf16_unicode_ci;
 
 use agro_system;
 
 create table states                                                     # Stores the Name of the States
 (
     state_id                int(2)             unique auto_increment,
-    state_name              varchar(15)        not null,
+    state_name              varchar(15)        collate utf8_unicode_ci not null,
     
     primary key(state_id)
-);
+)charset=utf8 collate=utf8_unicode_ci;
 
 create table districts                                                  # Stores Districts Names
 (
     districts_id            int(2)             unique auto_increment,
-    districts_name          varchar(15)        not null,
+    districts_name          varchar(15)        collate utf8_unicode_ci not null,
     state_id                int(2)             not null,
     
     primary key(districts_id),
@@ -27,7 +29,7 @@ create table districts                                                  # Stores
 create table area                                                       # Stores PIN Codes of Areas/Villages/Town
 (
     pin                     char(6)            unique,
-    area_name               varchar(15)        not null,
+    area_name               varchar(15)        collate utf8_unicode_ci not null,
     districts_id            int(3)             not null,
     
     primary key(pin),
@@ -39,7 +41,7 @@ create table area                                                       # Stores
 create table banks                                                      # Stores Bank Names
 (
     bank_id                 int(3)             unique auto_increment,
-    bank_name               varchar(30)        not null,
+    bank_name               varchar(30)        collate utf8_unicode_ci not null,
     
     primary key(bank_id)
 );
@@ -110,7 +112,7 @@ create table traders                                                    # Stores
 create table tools                                                      # Stores the List of tools used in farming
 (
     tool_id                 int(2)             unique auto_increment,
-    tool_type               varchar(30)        not null,
+    tool_type               varchar(30)        collate utf8_unicode_ci not null,
     
     primary key(tool_id)
 );
@@ -119,7 +121,7 @@ create table tool_owners                                                # Stores
 (
     phone_no                char(10)           not null,
     tool_id                 int(2)             not null,
-    tool_name               varchar(20)        not null,
+    tool_name               varchar(20)        collate utf8_unicode_ci not null,
     tool_quantity           int(2)             not null,                # Decrement at runtime or by the user
     tool_price              float              not null,                # Price per day
 
@@ -136,7 +138,7 @@ create table warehouse_company                                          # Wareho
 (
     warehouse_id            int(4)             unique auto_increment,
     warehouse_person        char(10)           not null,                # Warehouse Representative registered in our portal
-    warehouse_company       varchar(30)        not null,
+    warehouse_company       varchar(30)       collate utf8_unicode_ci not null,
     warehouse_pin           char(6)            not null,
 
     primary key(warehouse_id),
@@ -152,7 +154,7 @@ create table valueAddition_company                                      # Value 
 (
     va_id                   int(4)             unique auto_increment,
     va_person               char(10)           not null,                # Value Addition Representative registered in our portal
-    va_company              varchar(30)        not null,
+    va_company              varchar(30)        collate utf8_unicode_ci not null,
     va_pin                  char(6)            not null,
 
     primary key(va_id),
@@ -168,7 +170,7 @@ create table logistics_company                                          # Logist
 (
     log_company_id          int(4)             unique auto_increment,
     company_person          char(10)           not null,                # Company Representative
-    company_name            varchar(30)        not null,
+    company_name            varchar(30)        collate utf8_unicode_ci not null,
     company_pin             char(6)            not null,
     ratings                 int,                                        # Ratings out of 5 given by the user
 
@@ -184,7 +186,7 @@ create table logistics_company                                          # Logist
 create table occupation
 (
     occupation_id           int(2)            not null,
-    occupation_name         varchar(20)       not null,
+    occupation_name         varchar(20)      collate utf8_unicode_ci  not null,
 
     primary key(occupation_id)
 );
@@ -206,8 +208,8 @@ create table user_occupation
 create table crop_variety                                               # Stores the crop names and their variety
 (
     crop_var_id             int(3)             unique auto_increment,
-    crop_name               varchar(20)        not null,                # Name of crop, eg: Cotton
-    crop_type               varchar(20)        not null,                # Type of crop, eg: BT
+    crop_name               varchar(20)        collate utf8_unicode_ci not null,                # Name of crop, eg: Cotton
+    crop_type               varchar(20)        collate utf8_unicode_ci not null,                # Type of crop, eg: BT
 
     primary key(crop_var_id)
 );
@@ -392,68 +394,68 @@ create table bids                                                       # Table 
 
 # Queries
 
-insert into states (state_id,state_name) values (01,'Gujarat');
+insert into states (state_id,state_name) values (01,'ગુજરાત');
 
-insert into districts (districts_id,districts_name,state_id) values (01,'Ahmedabad',01);
-insert into districts (districts_id,districts_name,state_id) values (02,'Vadodara',01);
-insert into districts (districts_id,districts_name,state_id) values (03,'Surat',01);
-insert into districts (districts_id,districts_name,state_id) values (04,'Bhavnagar',01);
-insert into districts (districts_id,districts_name,state_id) values (05,'Kutch',01);
-insert into districts (districts_id,districts_name,state_id) values (06,'Rajkot',01);
-insert into districts (districts_id,districts_name,state_id) values (07,'Gandhinagar',01);
-insert into districts (districts_id,districts_name,state_id) values (08,'Jamnagar',01);
-insert into districts (districts_id,districts_name,state_id) values (09,'Anand',01);
-insert into districts (districts_id,districts_name,state_id) values (10,'Mehsana',01);
+insert into districts (districts_id,districts_name,state_id) values (01,'અમદાવાદ',01);
+insert into districts (districts_id,districts_name,state_id) values (02,'વડોદરા',01);
+insert into districts (districts_id,districts_name,state_id) values (03,'સુરત',01);
+insert into districts (districts_id,districts_name,state_id) values (04,'ભાવનગર',01);
+insert into districts (districts_id,districts_name,state_id) values (05,'કચ્છ',01);
+insert into districts (districts_id,districts_name,state_id) values (06,'રાજકોટ',01);
+insert into districts (districts_id,districts_name,state_id) values (07,'ગાંધીનગર',01);
+insert into districts (districts_id,districts_name,state_id) values (08,'જામનગર',01);
+insert into districts (districts_id,districts_name,state_id) values (09,'આનંદ',01);
+insert into districts (districts_id,districts_name,state_id) values (10,'મહેસાણા',01);
 
-insert into area (pin, area_name, districts_id) values ('382470','Digvijaynagar',01);
-insert into area (pin, area_name, districts_id) values ('380001','District Court',01);
-insert into area (pin, area_name, districts_id) values ('382481','Chandlodia',01);
-insert into area (pin, area_name, districts_id) values ('382330','Naroda',01);
-insert into area (pin, area_name, districts_id) values ('390019','Ajwa Road',02);
-insert into area (pin, area_name, districts_id) values ('390020','Akota',02);
-insert into area (pin, area_name, districts_id) values ('394651','Agasvan',03);
-insert into area (pin, area_name, districts_id) values ('394430','Ambawadi',03);
-insert into area (pin, area_name, districts_id) values ('364710','Lathidad',04);
-insert into area (pin, area_name, districts_id) values ('364110','Gogha',04);
-insert into area (pin, area_name, districts_id) values ('370110','Anjar',05);
-insert into area (pin, area_name, districts_id) values ('360311','Gondal',06);
-insert into area (pin, area_name, districts_id) values ('382721','Kalol',07);
-insert into area (pin, area_name, districts_id) values ('361306','Keshod',08);
-insert into area (pin, area_name, districts_id) values ('388001','Amul Dairy',09);
-insert into area (pin, area_name, districts_id) values ('384170','Unjha',10);
+insert into area (pin, area_name, districts_id) values ('382470','દિગ્વિજયનગર',01);
+insert into area (pin, area_name, districts_id) values ('380001','જિલ્લા અદાલત',01);
+insert into area (pin, area_name, districts_id) values ('382481','ચાંદોડિયા',01);
+insert into area (pin, area_name, districts_id) values ('382330','નરોડા',01);
+insert into area (pin, area_name, districts_id) values ('390019','અજવા રોડ',02);
+insert into area (pin, area_name, districts_id) values ('390020','અકોટા',02);
+insert into area (pin, area_name, districts_id) values ('394651','અગાસવાન',03);
+insert into area (pin, area_name, districts_id) values ('394430','અંબાવાડી',03);
+insert into area (pin, area_name, districts_id) values ('364710','લેથિડાડ',04);
+insert into area (pin, area_name, districts_id) values ('364110','ઘોઘા',04);
+insert into area (pin, area_name, districts_id) values ('370110','અંજાર',05);
+insert into area (pin, area_name, districts_id) values ('360311','ગોંડલ',06);
+insert into area (pin, area_name, districts_id) values ('382721','કલોલ',07);
+insert into area (pin, area_name, districts_id) values ('361306','કેશોદ',08);
+insert into area (pin, area_name, districts_id) values ('388001','અમુલ ડેરી',09);
+insert into area (pin, area_name, districts_id) values ('384170','ઉંઝા',10);
 
-insert into banks (bank_id, bank_name) values (001,'Axis Bank');
+insert into banks (bank_id, bank_name) values (001,'એક્સિસ બેંક');
 insert into banks (bank_id, bank_name) values (002,'SBI');
-insert into banks (bank_id, bank_name) values (003,'Dena Bank');
+insert into banks (bank_id, bank_name) values (003,'દેના બેંક');
 insert into banks (bank_id, bank_name) values (004,'ICICI');
 insert into banks (bank_id, bank_name) values (005,'HDFC');
-insert into banks (bank_id, bank_name) values (006,'Bank of Baroda');
-insert into banks (bank_id, bank_name) values (007,'Central Bank of India');
+insert into banks (bank_id, bank_name) values (006,'બેન્ક ઓફ બરોડા');
+insert into banks (bank_id, bank_name) values (007,'સેન્ટ્રલ બેન્ક ઓફ ઇન્ડિયા');
 
-insert into tools (tool_id, tool_type) values (01,'Tractor');
-insert into tools (tool_id, tool_type) values (02,'Transplanter');
-insert into tools (tool_id, tool_type) values (03,'Corn Harvester');
-insert into tools (tool_id, tool_type) values (04,'Potato Harvester');
-insert into tools (tool_id, tool_type) values (05,'Thresher');
-insert into tools (tool_id, tool_type) values (06,'Cotton picker');
-insert into tools (tool_id, tool_type) values (07,'Water Pump');
-insert into tools (tool_id, tool_type) values (08,'Generator');
-insert into tools (tool_id, tool_type) values (09,'Grain dryer');
-insert into tools (tool_id, tool_type) values (10,'Trailed Sprayer');
+insert into tools (tool_id, tool_type) values (01,'ટ્રેક્ટર');
+insert into tools (tool_id, tool_type) values (02,'ટ્રાન્સપ્લાટર');
+insert into tools (tool_id, tool_type) values (03,'કોર્ન હાર્વેસ્ટર');
+insert into tools (tool_id, tool_type) values (04,'પોટેટો હાર્વેસ્ટર');
+insert into tools (tool_id, tool_type) values (05,'થ્રેશર');
+insert into tools (tool_id, tool_type) values (06,'કોટન પીકર');
+insert into tools (tool_id, tool_type) values (07,'પાણી નો પંપ');
+insert into tools (tool_id, tool_type) values (08,'જનરેટર');
+insert into tools (tool_id, tool_type) values (09,'ગ્રાઇં ડ્રાયર');
+insert into tools (tool_id, tool_type) values (10,'ટ્રેઇલર સ્પ્રેયર');
 
-insert into crop_variety (crop_var_id, crop_name, crop_type) values (001,'Cotton','G. Hirsutum');
-insert into crop_variety (crop_var_id, crop_name, crop_type) values (002,'Cotton','G. Arboreum');
-insert into crop_variety (crop_var_id, crop_name, crop_type) values (003,'Bajra','RHB-121');
-insert into crop_variety (crop_var_id, crop_name, crop_type) values (004,'Bajra','RHB-90');
-insert into crop_variety (crop_var_id, crop_name, crop_type) values (005,'Rice','Basmati Rice');
-insert into crop_variety (crop_var_id, crop_name, crop_type) values (006,'Rice','Gujarat 17');
-insert into crop_variety (crop_var_id, crop_name, crop_type) values (007,'Wheat','GW 173');
-insert into crop_variety (crop_var_id, crop_name, crop_type) values (008,'Wheat','Raj 3037');
+insert into crop_variety (crop_var_id, crop_name, crop_type) values (001,'કપાસ','G. Hirsutum');
+insert into crop_variety (crop_var_id, crop_name, crop_type) values (002,'કપાસ','G. Arboreum');
+insert into crop_variety (crop_var_id, crop_name, crop_type) values (003,'બાઝરા','RHB-121');
+insert into crop_variety (crop_var_id, crop_name, crop_type) values (004,'બાઝરા','RHB-90');
+insert into crop_variety (crop_var_id, crop_name, crop_type) values (005,'ડાંગર','Basmati Rice');
+insert into crop_variety (crop_var_id, crop_name, crop_type) values (006,'ડાંગર','Gujarat 17');
+insert into crop_variety (crop_var_id, crop_name, crop_type) values (007,'ઘઉં','GW 173');
+insert into crop_variety (crop_var_id, crop_name, crop_type) values (008,'ઘઉં','Raj 3037');
 
-insert into occupation (occupation_id, occupation_name) values (01,'Farmer');
-insert into occupation (occupation_id, occupation_name) values (02,'Trader');
-insert into occupation (occupation_id, occupation_name) values (03,'Logistics');
-insert into occupation (occupation_id, occupation_name) values (04,'Tools Owner');
+insert into occupation (occupation_id, occupation_name) values (01,'ખેડૂત');
+insert into occupation (occupation_id, occupation_name) values (02,'વેપારી');
+insert into occupation (occupation_id, occupation_name) values (03,'લોજિસ્ટિક્સ');
+insert into occupation (occupation_id, occupation_name) values (04,'સાધનનો માલિક');
 
 # Test Data
 
@@ -520,14 +522,6 @@ insert into questions(q_statement) values ("How many times did you gave phospate
 
 # Queries
 
+# 1). Auction
+
 select * from (bids natural join (select crop_request_entry, max(bid_amount) as bid_amount from bids group by crop_request_entry) as a);
-
-update make_crop_purchase_sell set req_accepter='8141724612',accept_price=1234 where crop_request_entry=4; 
-
-insert into crop_shipment_request (crop_request_entry, src_person, src_addr, src_pin, w_price, dest_person, dest_addr, dest_pin)
-values (4, '9409611733', 'Digvijaynagar', '382470', 45, '8141724612', 'Swapna Srushti', '382330');
-
-select x.phone_no, x.first_name, x.last_name, x.pin, y.accept_price, y.crop_request_entry from (select * from users) as x join (select req_accepter, accept_price, crop_request_entry from make_crop_purchase_sell where phone_no='9409611733' 
-and req_accepter is not null and req_type='S') as y where x.phone_no=y.req_accepter;
-
-select * from users where phone_no='9409611733'
