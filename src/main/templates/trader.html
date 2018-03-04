@@ -22,6 +22,24 @@
 <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../static/ico/apple-touch-icon-114-precomposed.png">
 <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../static/ico/apple-touch-icon-72-precomposed.png">
 <link rel="apple-touch-icon-precomposed" href="../../static/ico/apple-touch-icon-57-precomposed.png">
+<style>
+    table#t01 tr:nth-child(even) {
+      background-color: #eee;
+  }
+  table#t01 tr:nth-child(odd) {
+      background-color: #fff;
+  }
+  table#t01 th {
+      color: white;
+      background-color: black;
+  }
+
+  table#t01 {
+    width: 100%;
+    text-align:center;
+  }
+</style>
+
 </head>
 <body data-spy="scroll" data-target=".bs-docs-sidebar">
 <!-- Navbar
@@ -35,6 +53,7 @@
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li class=""><a href="{{ domain }}{{ username }}">Home</a> </li>
+              <li class=""><a href="{{ domain }}{{ username }}/trader/notifications">Notifications</a> </li>
             </ul>
           </div>
         </div>
@@ -47,10 +66,13 @@
     <div class="span12">
       <div class="page-header">
         <div class="row-fluid">
-          <div class="span12">
-            <h1> Selling </h1>
+          <div class="span4">
+            <h1>Trader</h1>
           </div>
-        </div>
+          <div class="span8">
+              <h1>{{ info }}</h1>
+            </div>
+          </div>
       </div>
     </div>
   </div>
@@ -58,45 +80,66 @@
   <div class="row-fluid contact">  
 	<div class="span4">
 	  <ul class="bordered-list">
-    <li>Client No:</b>{{ username }}</li>	
-    <li>{{ info }}</li>
+        <li>Client No:</b>{{ username }}</li>	
       </ul>
     </div>
-    <div class="span6">
+    <div class="span8">
       <div class="wpcf7" id="wpcf7-f75-t1-o1">
-        <form action="" method="post" class="wpcf7-form" id="cform" name="cform">
-          <div id="output" class="alert"> </div>
-          <div class="form-meta clearfix">
-            <div class="formcol">
-			  <label for="crop_id"> Crop Name </label>
-					<select name="crop_id" id="crop_id">
-              {% for id, name, type in crop_details %}
-              <option value={{ id }}>{{ name }} - {{ type }}</option>
+          <table id="t01">
+            <tr>
+              <th>Phone no</th>
+              <th>Crop Name</th> 
+              <th>Crop Type</th>
+              <th>Crop Weight</th>
+              <th>Crop Harvest Date</th>
+              <th>Reserve Price</th>
+              <th>Bid</th>
+            </tr>
+            {% for no, crop_req, name,type,weight,date,price in sold_Data %}
+              <tr>
+                <td>{{ no }}</td>
+                <td>{{ name }}</td> 
+                <td>{{ type }}</td>
+                <td>{{ weight }}</td>
+                <td>{{ date }}</td>
+                <td>{{ price }}</td>
+                <td><a data-toggle="modal" data-target="#bid_model_{{ crop_req }}">Click</a></td>
+              </tr>
             {% endfor %}
-					</select>
-			  <label for="crop_weight"> Weight for Sell (KG)</label>
-              <input type="text" name="crop_weight" value="" id="crop_weight" size="40" />
-            </div>
-            <div class="formcol">
-			  <label for="req_pin"> Land Area</label>
-        <select name="req_pin" id="req_pin">
-            {% for pin, area in pin_area_tuple %}
-              <option value={{ pin }}>{{ area }}</option>
-            {% endfor %}
-					</select>
-          </div>
-		  </div>
-			<div class="form-meta clearfix">
-				<label for="notes"> Notes </label>
-				<textarea name="notes" id="notes" cols="40" rows="10"></textarea>
-		    </div>
-          </div>
-          <button type="submit" class="btn btn-success">Submit</button>
-		</form>
+          </table>
       </div>
     </div>
   </div>
 </div>
+
+{% for no, crop_req, name,type,weight,date,price in sold_Data %}
+<div id="bid_model_{{ crop_req }}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="bidLabel" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="myModalLabel">
+      Bidding
+      </h4>
+    </div>
+    <div class="modal-body">
+        <form action="" method="post" class="wpcf7-form" id="bid_res" name="bid_res">
+          <div id="output" class="alert"></div>
+          <div class="form-meta clearfix">
+            <div class="formcol">
+                <label for="crop_request_entry"></label>
+                <input type="hidden" name="crop_request_entry" id="crop_request_entry" value={{ crop_req }}></input>
+                <p>Your Phone No: {{ username }}</p>
+                <label for="bid_amount"> Please add bid amount: </label>
+                <input type="text" name="bid_amount" id="bid_amount" value="" size="40" />  
+            </div>
+          </div>
+          <button type="submit" class="btn btn-default" name="bid_res">Submit</button>
+        </form>
+    </div>
+  </div>
+{% endfor %}
+
+
+
  <!-- Footer
     ================================================== -->
     <footer class="footer">

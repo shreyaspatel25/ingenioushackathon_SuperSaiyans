@@ -48,7 +48,7 @@
       <div class="page-header">
         <div class="row-fluid">
           <div class="span12">
-            <h1> Selling </h1>
+            <h1>Notifications</h1>
           </div>
         </div>
       </div>
@@ -56,43 +56,9 @@
   </div>
   
   <div class="row-fluid contact">  
-	<div class="span4">
-	  <ul class="bordered-list">
-    <li>Client No:</b>{{ username }}</li>	
-    <li>{{ info }}</li>
-      </ul>
-    </div>
-    <div class="span6">
+    <div class="span12">
       <div class="wpcf7" id="wpcf7-f75-t1-o1">
-        <form action="" method="post" class="wpcf7-form" id="cform" name="cform">
-          <div id="output" class="alert"> </div>
-          <div class="form-meta clearfix">
-            <div class="formcol">
-			  <label for="crop_id"> Crop Name </label>
-					<select name="crop_id" id="crop_id">
-              {% for id, name, type in crop_details %}
-              <option value={{ id }}>{{ name }} - {{ type }}</option>
-            {% endfor %}
-					</select>
-			  <label for="crop_weight"> Weight for Sell (KG)</label>
-              <input type="text" name="crop_weight" value="" id="crop_weight" size="40" />
-            </div>
-            <div class="formcol">
-			  <label for="req_pin"> Land Area</label>
-        <select name="req_pin" id="req_pin">
-            {% for pin, area in pin_area_tuple %}
-              <option value={{ pin }}>{{ area }}</option>
-            {% endfor %}
-					</select>
-          </div>
-		  </div>
-			<div class="form-meta clearfix">
-				<label for="notes"> Notes </label>
-				<textarea name="notes" id="notes" cols="40" rows="10"></textarea>
-		    </div>
-          </div>
-          <button type="submit" class="btn btn-success">Submit</button>
-		</form>
+        
       </div>
     </div>
   </div>

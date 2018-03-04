@@ -178,10 +178,66 @@ def insertCropDetails(phone_no, land_size, land_pin, land_owner_phone, crop_var_
     else:
         isSuccess = False
     
-    return isSuccess    
+    return isSuccess  
+
+def sellCrop(phone_no, req_type, crop_id, req_pin, crop_weight, entry_time, notes):
+    query = "INSERT INTO make_crop_purchase_sell (phone_no, \
+                                        req_type, \
+                                        crop_id, \
+                                        req_pin, \
+                                        crop_weight, \
+                                        entry_time, \
+                                        notes)" \
+            " VALUES(%s,%s, %s,%s,%s, STR_TO_DATE(%s,'%d-%m-%Y'),%s)"  
+    
+    values = (phone_no, req_type, crop_id, req_pin, crop_weight, entry_time, notes)
+
+    isSuccess = True
+    conn = connectionMYSQL()
+    if conn.is_connected():
+        cursor = conn.cursor()
+        cursor.execute(query, values)
+        conn.commit()
+    else:
+        isSuccess = False
+    
+    return isSuccess  
+
+def extract_soldData():
+    query="select phone_no, y.crop_request_entry, crop_name, crop_type, crop_weight, y.crop_harvest_date, reserve_price from (select crop_var_id, crop_name, crop_type from crop_variety) as x natural join (select phone_no, crop_var_id, c.crop_harvest_date, crop_weight, reserve_price, s.crop_request_entry from (select crop_id, crop_var_id, crop_harvest_date from crop_plant_event) as c join (select phone_no, crop_id, crop_weight, reserve_price, crop_request_entry from make_crop_purchase_sell where req_type='S') as s where c.crop_id=s.crop_id) as y"
+
+    conn = connectionMYSQL()
+    if conn.is_connected():
+        cursor = conn.cursor()
+        cursor.execute(query)
+        l = cursor.fetchall()
+        return l
+    else:
+        return []
+
+def insertBid(crop_request_entry, trader_no, bid_amount):
+    query = "INSERT INTO bids (crop_request_entry, \
+                            trader_no, \
+                            bid_amount)" \
+            " VALUES(%s,%s,%s)" 
+    
+    values = (crop_request_entry, trader_no, bid_amount)
+
+    isSuccess = True
+    conn = connectionMYSQL()
+    if conn.is_connected():
+        cursor = conn.cursor()
+        cursor.execute(query, values)
+        conn.commit()
+    else:
+        isSuccess = False
+    
+    return isSuccess  
+    
 
 if __name__=="__main__":
-    print extract_area()
-    print extract_occupations('9409611733')
-    print extract_remain_occupations('9409611733')
-    print getWeatherData()
+    # print extract_area()
+    # print extract_occupations('9409611733')
+    # print extract_remain_occupations('9409611733')
+    # print getWeatherData()
+    print extract_soldData()

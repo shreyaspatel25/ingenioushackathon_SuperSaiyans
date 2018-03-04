@@ -10,6 +10,7 @@ sys.setdefaultencoding('utf-8')
 
 from flask import Flask, render_template, request, redirect, session
 from weather import Weather
+from time import gmtime, strftime
 
 from connectDB import *
 from authentication import *
@@ -145,8 +146,46 @@ def farmer(username):
     elif session['username'] != username:
         return "Page Not Found!"
 
+@app.route('/<username>/trader',methods = ['GET','POST'])
+def trader(username):
+    if session['username'] == username:
+        sold_Data = extract_soldData()
+        info=""
+
+        if request.method=='POST':
+            crop_request_entry = request.form['crop_request_entry']
+            trader_no = username
+            bid_amount = request.form['bid_amount']
+
+            if insertBid(crop_request_entry, trader_no, bid_amount):
+                info="Successful bid"
+            else:
+                info="Unsuccessful bid"
+
+        return render_template('trader.html', \
+                            domain=DOMAIN, \
+                            username=username, \
+                            sold_Data=sold_Data, \
+                            info=info)
+    elif session['username'] != username:
+        return "Page Not Found!"
+
+
+@app.route('/<username>/farmer/notifications', methods=['GET'])
+def farmer_notifications(username):
+    
+    return render_template('notifications.html',
+                                domain=DOMAIN,
+                                username=username)
+
+@app.route('/<username>/trader/notifications', methods=['GET'])
+def trader_notifications(username):
+    return render_template('notifications.html',
+                                domain=DOMAIN,
+                                username=username)
+
 @app.route('/<username>/farmer/sell',methods = ['GET','POST'])
-def sell(username,type):
+def sell(username):
     if session['username']==username:
         crop_details = extract_hirvestedcrop(username)
         pin_area = extract_area()
@@ -158,7 +197,13 @@ def sell(username,type):
             crop_id = request.form['crop_id']
             req_pin = request.form['req_pin']
             crop_weight = request.form['crop_weight']
-            entry_time = 
+            entry_time = strftime("%d-%m-%Y", gmtime())
+            notes = request.form['notes']
+
+            if sellCrop(phone_no, req_type, crop_id, req_pin, crop_weight, entry_time, notes):
+                info="Request executed successfully"
+            else:
+                info="Please try again"
 
         return render_template('sell.html',
                                 domain=DOMAIN,

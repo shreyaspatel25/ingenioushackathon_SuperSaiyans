@@ -1,3 +1,5 @@
+drop schema agro_system;
+
 create database agro_system;
 
 use agro_system;
@@ -187,11 +189,14 @@ create table crop_plant_event                                           # Stores
     land_owner_phone        char(10),                                   # Useful when farmer is farming on other person's land
     crop_var_id             int(3)             not null,                # Crop Type and Variety
     plant_date              date               not null,                # Date of Planting
-    crop_harvest_date       date    ,                                   # Store day to day events, pesticides and fertilizers used in some file, probabily in XML or JASON
+    crop_harvest_date       date,                                       # Store day to day events, pesticides and fertilizers used in some file, probabily in XML or JASON
     organic_certified       char(1),                                    # Y, N
     weight_after_harvest    float,                                      # Weight in KG
     quality_certi           varchar(20),                                # Certification for quality of crop after harvest by our team, what we will store here -> link to official certificate
-    quality_certi_date      date    ,                                   # Date of quality certification
+    quality_certi_date      date,                                       # Date of quality certification
+    questionnaire           varchar(30),                                # Link to the Questionaire files for Data Analysis(JSON) related to production
+    active_status           char(1)            not null    default 'Y', # Archived Entry(N) or New(Y)
+
 
     primary key(crop_id),
 
@@ -218,12 +223,14 @@ create table make_crop_purchase_sell                                    # Table 
     req_pin                 char(6)            not null,                # Location of Crop, independant of user address
     crop_weight             float              not null,                # Weight in KG
     req_accepter            char(10),                                   # Phone Number of request accepter
+    accept_price            float,                                      # Accepted price by the bidder
     clearence               char(1),                                    # Clearence(Y/N) from request initiator, that whether he is okay with the request acceptor's deal. Send notification to him after request accepter accepts the request
     entry_time              datetime           not null,                # Time of entry in this table
     accept_time             datetime,                                   # Time of request accept
     clear_time              datetime,                                   # Time of clearence
-    notes                   varchar(100),                               # Notes by request initiator
     reserve_price           int,                                        # Reserve price of the crop
+    active_status           char(1)            not null    default 'Y', # Archived Entry(N) or New(Y)
+    notes                   varchar(100),                               # Notes by request initiator
 
     primary key(crop_request_entry),
 
@@ -294,6 +301,7 @@ create table tool_request                                               # Table 
     clearence               char(1),                                    # Clearence(Y/N) of tool owner and his price by the source person
     otp_src                 int(6),                                     # OTP generated after clearence. To be used for source verification
     tool_shipped_time       datetime,                                   # Time of Tool delivered to requesting user, decided during source OTP verification
+    active_status           char(1)            not null    default 'Y', # Archived Entry(N) or New(Y)
     notes                   varchar(50),                                # To be added by the query acceptor(Contains description about tools like power, etc..)
 
     primary key(tool_shipment_id),
@@ -308,6 +316,30 @@ create table tool_request                                               # Table 
     on delete cascade on update cascade,
 
     foreign key(tool_id) references tools(tool_id)
+    on delete cascade on update cascade
+);
+
+create table questions
+(
+    q_id                    int                unique auto_increment,
+    q_statement             varchar(100)       not null,
+    possible_ans            varchar(100),
+
+    primary key(q_id)
+);
+
+create table q_responses
+(
+    p_id                    char(10)           not null,
+    q_id                    int                not null,
+    ans_statement           varchar(100),
+
+    primary key(p_id, q_id),
+
+    foreign key(p_id) references users(phone_no)
+    on delete cascade on update cascade,
+
+    foreign key(q_id) references questions(q_id)
     on delete cascade on update cascade
 );
 
@@ -448,13 +480,14 @@ insert into bids(crop_request_entry, trader_no, bid_amount) values (3, '94096117
 insert into bids(crop_request_entry, trader_no, bid_amount) values (3, '8609618733', 15);
 insert into bids(crop_request_entry, trader_no, bid_amount) values (1, '9409611722', 12);
 
+insert into questions(q_statement) values ("What amount of phospate is required for cotton growth at initial level?");
+insert into questions(q_statement) values ("How much amount of water you gave to plants last week?");
+insert into questions(q_statement) values ("How manytimes did you gave pesticides to the plant?");
+insert into questions(q_statement) values ("Nitrogen is best fixed when presence of ___ bacteria?");
+insert into questions(q_statement) values ("How many times did you gave phospates tothe crop?");
+
 # Queries
 
 # 1). Auction
 
 select * from (bids natural join (select crop_request_entry, max(bid_amount) as bid_amount from bids group by crop_request_entry) as a);
-
-select crop_id from crop_plant_event where phone_no='9409611733'
-
-select a.crop_var_id, a.crop_name, a.crop_type from crop_variety as a join (select crop_id from crop_plant_event where phone_no='9409611733'
-) as e where e.crop_id=a.crop_var_id;
