@@ -48,6 +48,35 @@ def extract_area():
     else:
         return []
 
+def extract_crop():
+    query = "select * from crop_variety"
+
+    conn = connectionMYSQL()
+    if conn.is_connected():
+        cursor = conn.cursor()
+        cursor.execute(query)
+        l = cursor.fetchall()
+        return l
+    else:
+        return []
+
+def extract_hirvestedcrop(phone_no):
+    query="select a.crop_var_id, a.crop_name, a.crop_type from crop_variety as a \
+    join (select crop_id from crop_plant_event where phone_no=%s) \
+    as e where e.crop_id=a.crop_var_id"
+
+    values = (phone_no,)
+
+    conn = connectionMYSQL()
+    if conn.is_connected():
+        cursor = conn.cursor()
+        cursor.execute(query, values)
+        l = cursor.fetchall()
+        return l
+    else:
+        return []
+
+
 def extract_state():
     query = "select state_name from states"
 
@@ -118,6 +147,38 @@ def insertLogisticsDetails(person_id, name, pin):
         isSuccess = False
     
     return isSuccess
+
+def insertCropDetails(phone_no, land_size, land_pin, land_owner_phone, crop_var_id, \
+            plant_date, crop_harvest_date, organic_certified, weight_after_harvest, quality_certi,\
+            quality_certi_date):
+    query = "INSERT INTO crop_plant_event (phone_no, \
+                                land_size, \
+                                land_pin, \
+                                land_owner_phone, \
+                                crop_var_id, \
+                                plant_date, \
+                                crop_harvest_date, \
+                                organic_certified, \
+                                weight_after_harvest, \
+                                quality_certi, \
+                                quality_certi_date)" \
+            " VALUES(%s,%s, %s,%s,%s,STR_TO_DATE(%s,'%d-%m-%Y'),\
+            STR_TO_DATE(%s,'%d-%m-%Y'),%s,%s,%s,STR_TO_DATE(%s,'%d-%m-%Y'))"    
+
+    values = (phone_no, land_size, land_pin, land_owner_phone, crop_var_id, \
+            plant_date, crop_harvest_date, organic_certified, weight_after_harvest, quality_certi,\
+            quality_certi_date)
+    
+    isSuccess = True
+    conn = connectionMYSQL()
+    if conn.is_connected():
+        cursor = conn.cursor()
+        cursor.execute(query, values)
+        conn.commit()
+    else:
+        isSuccess = False
+    
+    return isSuccess    
 
 if __name__=="__main__":
     print extract_area()

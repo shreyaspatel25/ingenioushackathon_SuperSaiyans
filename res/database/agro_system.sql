@@ -1,5 +1,3 @@
-drop schema agro_system;
-
 create database agro_system;
 
 use agro_system;
@@ -188,12 +186,12 @@ create table crop_plant_event                                           # Stores
     land_pin                char(6)            not null,                # Provide drop down list of area name
     land_owner_phone        char(10),                                   # Useful when farmer is farming on other person's land
     crop_var_id             int(3)             not null,                # Crop Type and Variety
-    plant_date              datetime           not null,                # Date of Planting
-    crop_harvest_date       datetime,                                   # Store day to day events, pesticides and fertilizers used in some file, probabily in XML or JASON
+    plant_date              date               not null,                # Date of Planting
+    crop_harvest_date       date    ,                                   # Store day to day events, pesticides and fertilizers used in some file, probabily in XML or JASON
     organic_certified       char(1),                                    # Y, N
     weight_after_harvest    float,                                      # Weight in KG
     quality_certi           varchar(20),                                # Certification for quality of crop after harvest by our team, what we will store here -> link to official certificate
-    quality_certi_date      datetime,                                   # Date of quality certification
+    quality_certi_date      date    ,                                   # Date of quality certification
 
     primary key(crop_id),
 
@@ -225,6 +223,7 @@ create table make_crop_purchase_sell                                    # Table 
     accept_time             datetime,                                   # Time of request accept
     clear_time              datetime,                                   # Time of clearence
     notes                   varchar(100),                               # Notes by request initiator
+    reserve_price           int,                                        # Reserve price of the crop
 
     primary key(crop_request_entry),
 
@@ -314,11 +313,11 @@ create table tool_request                                               # Table 
 
 create table bids                                                       # Table to store auction Bids
 (
-    crop_request_entry      int(6)             not null,                # Number of Crop to be bid, only those posted bythe Farmer, check crop_var_id == NULL
+	crop_request_entry      int(6)             not null,                # Number of Crop to be bid, only those posted bythe Farmer, check crop_var_id == NULL
     trader_no               char(10)           not null,                # Number of the Trader who bids
     bid_amount              int                not null     default 0,
 
-    primary key(crop_request_entry,trader_no),
+    primary key(crop_request_entry, trader_no),
 
     foreign key(crop_request_entry) references make_crop_purchase_sell(crop_request_entry)
     on delete cascade on update cascade,
@@ -412,9 +411,50 @@ values ('7989611733', '12345', 'Han', 'Solo','hansolo@starwars.space', 'Optimus'
 insert into users (phone_no, password, first_name, last_name, email_id, address_line_1, address_line_2, gender, pin, dob,online_status) 
 values ('8706412734', '12345', 'Princess', 'Leia','leiap@starwars.space', 'Space','Universe', 'F', '384170', STR_TO_DATE('27-09-1956','%d-%m-%Y'),'N');
 
+# Test Data
 
+insert into crop_plant_event (phone_no, land_size, land_pin, land_owner_phone, crop_var_id, plant_date)
+values ('9409611733', 34, '382330', '9409611722', 003, STR_TO_DATE('03-02-2018','%d-%m-%Y'));
 
-select occupation_name from occupation where occupation_name not in
-    (select occupation_name from occupation natural join user_occupation where
-    occupation.occupation_id=user_occupation.occupation_id and phone_no='9409611733')
+insert into crop_plant_event (phone_no, land_size, land_pin, land_owner_phone, crop_var_id, plant_date)
+values ('9409611733', 14, '382470', '9409611733', 002, STR_TO_DATE('27-01-2018','%d-%m-%Y'));
 
+insert into crop_plant_event (phone_no, land_size, land_pin, land_owner_phone, crop_var_id, plant_date)
+values ('9409611733', 28, '384170', '8706412734', 002, STR_TO_DATE('15-02-2018','%d-%m-%Y'));
+
+insert into crop_plant_event (phone_no, land_size, land_pin, land_owner_phone, crop_var_id, plant_date)
+values ('8609618733', 10, '382481', '9409611722', 001, STR_TO_DATE('10-02-2018','%d-%m-%Y'));
+
+insert into crop_plant_event (phone_no, land_size, land_pin, land_owner_phone, crop_var_id, plant_date)
+values ('9409611722', 20, '382481', '9409611722', 003, STR_TO_DATE('07-02-2018','%d-%m-%Y'));
+
+# Test Data
+
+insert into make_crop_purchase_sell(phone_no, req_type, crop_id, req_pin, crop_weight, entry_time, reserve_price)
+values ('9409611733', 'S', 1, '382330', 26, '2018-6-14 10:58:46', 23);
+
+insert into make_crop_purchase_sell(phone_no, req_type, crop_id, req_pin, crop_weight, entry_time, reserve_price)
+values ('9409611733', 'S', 2, '382470', 30, '2018-8-12 11:00:46', 35);
+
+insert into make_crop_purchase_sell(phone_no, req_type, crop_id, req_pin, crop_weight, entry_time, reserve_price)
+values ('8609618733', 'S', 4, '382481', 30, '2018-5-14 09:45:46', 10);
+
+# Test Data
+
+insert into bids(crop_request_entry, trader_no, bid_amount) values (2, '9409611722', 34);
+insert into bids(crop_request_entry, trader_no, bid_amount) values (2, '9409611733', 33);
+insert into bids(crop_request_entry, trader_no, bid_amount) values (2, '8609618733', 32);
+insert into bids(crop_request_entry, trader_no, bid_amount) values (3, '9409611722', 10);
+insert into bids(crop_request_entry, trader_no, bid_amount) values (3, '8609618733', 15);
+insert into bids(crop_request_entry, trader_no, bid_amount) values (1, '9409611722', 12);
+
+# Queries
+
+# 1). Auction
+
+select * from (bids natural join (select crop_request_entry, max(bid_amount) as bid_amount from bids group by crop_request_entry) as a);
+
+select crop_id from crop_plant_event where phone_no='9409611733'
+
+select a.crop_var_id, a.crop_name, a.crop_type from crop_variety as a join (select crop_id from crop_plant_event where phone_no='9409611733'
+) as e where e.crop_id=a.crop_var_id;

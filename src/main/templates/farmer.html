@@ -43,33 +43,6 @@
 <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../static/ico/apple-touch-icon-114-precomposed.png">
 <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../static/ico/apple-touch-icon-72-precomposed.png">
 <link rel="apple-touch-icon-precomposed" href="../static/ico/apple-touch-icon-57-precomposed.png">
-
-<style>
-
-    nav {
-        float: left;
-        max-width: 250px;
-        margin: 0;
-        padding: 1em;
-    }
-    
-    nav ul {
-        list-style-type: none;
-        padding: 0;
-    }
-       
-    nav ul a {
-        text-decoration: none;
-    }
-    
-    article {
-        margin-left: 170px;
-        border-left: 1px solid gray;
-        padding: 1em;
-        overflow: hidden;
-    }
-    </style>
-
 </head>
 <body data-spy="scroll" data-target=".bs-docs-sidebar">
 <!-- Navbar
@@ -78,11 +51,11 @@
   <div class="navbar navbar-static-top"> 
     <!-- navbar-fixed-top -->
     <div class="navbar-inner">
-      <div class="container"> <a class="brand" href="{{ domain }}{{ username }}/dashboard"> <img src="../static/img/Logodark.png" alt="Logo"></a>
+      <div class="container"> <a class="brand" href="{{ domain }}{{ username }}"> <img src="../static/img/Logodark.png" alt="Logo"></a>
         <div id="main-nav">
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class=""><a href="{{ domain }}{{ username }}/dashboard">Home</a> </li>
+              <li class=""><a href="{{ domain }}{{ username }}">Home</a> </li>
             </ul>
           </div>
         </div>
@@ -142,10 +115,10 @@
 		
 		<div class="column">
 				<div class="price">
-					<a href="/{{ username }}/farmer/sell">
+					<a href="{{ domain }}{{ username }}/farmer/sell">
 						<img src="../static/img/sell.jpg" alt="Farmer" width="200" height="200" hspace="50" vspace="80">
 					</a>
-					<a href="/{{ username }}/farmer/crop">
+					<a href="{{ domain }}{{ username }}/farmer/crop">
 						<img src="../static/img/crop.jpg" alt="Farmer" width="200" height="200" hspace="20">
 					</a>	
 				</div>

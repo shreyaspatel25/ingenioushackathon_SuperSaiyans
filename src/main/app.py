@@ -82,7 +82,7 @@ def signup():
 def login():
     if request.method == 'GET':
         if 'username' in session:
-            return redirect(DOMAIN + session['username'] + '/dashboard', code=302)
+            return redirect(DOMAIN + session['username'], code=302)
         return render_template('login.html', domain=DOMAIN)
     elif request.method == 'POST':
         phone_no = request.form['phone_no']
@@ -91,13 +91,13 @@ def login():
         session['username']=phone_no
 
         if auth_login(phone_no, password):
-            return redirect(DOMAIN + session['username'] + '/dashboard', code=302)
+            return redirect(DOMAIN + session['username'], code=302)
         else:
             return render_template('login.html', \
                                 domain=DOMAIN, \
                                 info="Please enter valid username or password.")
 
-@app.route('/<username>/dashboard',methods = ['GET','POST'])
+@app.route('/<username>',methods = ['GET','POST'])
 def dashboard(username):
     if 'username' in session:
         if session['username']==username:
@@ -145,26 +145,72 @@ def farmer(username):
     elif session['username'] != username:
         return "Page Not Found!"
 
-@app.route('/<username>/farmer/sell',methods = ['GET'])
-def farmer(username):
-    if session['username'] == username:
+@app.route('/<username>/farmer/sell',methods = ['GET','POST'])
+def sell(username,type):
+    if session['username']==username:
+        crop_details = extract_hirvestedcrop(username)
+        pin_area = extract_area()
+        info=""
+
+        if request.method=='POST':
+            phone_no = username
+            req_type = 'S'
+            crop_id = request.form['crop_id']
+            req_pin = request.form['req_pin']
+            crop_weight = request.form['crop_weight']
+            entry_time = 
+
+        return render_template('sell.html',
+                                domain=DOMAIN,
+                                username=username,
+                                crop_details=crop_details,
+                                pin_area_tuple=pin_area,
+                                info=info)        
+    else:
+        return render_template('sell.html')
+
+@app.route('/<username>/<type>/crop',methods = ['GET','POST'])
+def crop(username, type):
+    if type!="farmer":
         weather_data = getWeatherData()
         return render_template('farmer.html', \
                             domain=DOMAIN, \
                             username=username, \
                             weatherdata=weather_data)
+
+    if session['username'] == username:
+        crop_details = extract_crop()
+        pin_area = extract_area()
+        info=""
+
+        if request.method=='POST':
+            phone_no = username
+            land_size = request.form['land_size']
+            land_pin = request.form['land_pin']
+            crop_var_id = request.form['crop_var_id']
+            land_owner_phone = request.form['land_owner_phone']
+            plant_date = request.form['plant_date']
+            crop_harvest_date = request.form['crop_harvest_date']
+            organic_certified = ''
+            weight_after_harvest = request.form['weight_after_harvest']
+            quality_certi = request.form['quality_certi']
+            quality_certi_date = request.form['quality_certi_date']
+
+            if insertCropDetails(phone_no, land_size, land_pin, land_owner_phone, crop_var_id, \
+            plant_date, crop_harvest_date, organic_certified, weight_after_harvest, quality_certi,\
+            quality_certi_date):
+                info="Crop Details added successfully"
+            else:
+                info="Please try again"
+
+        return render_template('crop.html',
+                                domain=DOMAIN,
+                                username=username,
+                                crop_details=crop_details,
+                                pin_area_tuple=pin_area,
+                                info=info)
     elif session['username'] != username:
         return "Page Not Found!"
 
-@app.route('/<username>/farmer/crop',methods = ['GET'])
-def farmer(username):
-    if session['username'] == username:
-        weather_data = getWeatherData()
-        return render_template('farmer.html', \
-                            domain=DOMAIN, \
-                            username=username, \
-                            weatherdata=weather_data)
-    elif session['username'] != username:
-        return "Page Not Found!"
 if __name__=="__main__":
     app.run(host = '0.0.0.0', port=8080, threaded=True)

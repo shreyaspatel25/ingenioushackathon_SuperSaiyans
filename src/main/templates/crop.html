@@ -7,21 +7,21 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <!-- Le styles -->
-<link href="../static/css/bootstrap.css" rel="stylesheet">
-<link href="../static/css/bootstrap-responsive.css" rel="stylesheet">
-<link href="../static/css/docs.css" rel="stylesheet">
-<link href="../static/css/prettyPhoto.css" rel="stylesheet" type="text/css" />
-<link href="../static/js/google-code-prettify/prettify.css" rel="stylesheet">
+<link href="../../static/css/bootstrap.css" rel="stylesheet">
+<link href="../../static/css/bootstrap-responsive.css" rel="stylesheet">
+<link href="../../static/css/docs.css" rel="stylesheet">
+<link href="../../static/css/prettyPhoto.css" rel="stylesheet" type="text/css" />
+<link href="../../static/js/google-code-prettify/prettify.css" rel="stylesheet">
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 <!-- Le fav and touch icons -->
-<link rel="shortcut icon" href="../static/ico/favicon.ico">
-<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../static/ico/apple-touch-icon-144-precomposed.png">
-<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../static/ico/apple-touch-icon-114-precomposed.png">
-<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../static/ico/apple-touch-icon-72-precomposed.png">
-<link rel="apple-touch-icon-precomposed" href="../static/ico/apple-touch-icon-57-precomposed.png">
+<link rel="shortcut icon" href="../../static/ico/favicon.ico">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../static/ico/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../static/ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../static/ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed" href="../../static/ico/apple-touch-icon-57-precomposed.png">
 </head>
 <body data-spy="scroll" data-target=".bs-docs-sidebar">
 <!-- Navbar
@@ -30,11 +30,11 @@
   <div class="navbar navbar-static-top"> 
     <!-- navbar-fixed-top -->
     <div class="navbar-inner">
-      <div class="container"> <a class="brand" href="index.html"> <img src="../static/img/Logodark.png" alt="Logo"></a>
+      <div class="container"> <a class="brand" href="{{ domain }}{{ username }}/dashboard"> <img src="../../static/img/Logodark.png" alt="Logo"></a>
         <div id="main-nav">
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class=""><a href="index.html">Home</a> </li>
+              <li class=""><a href="{{ domain }}{{ username }}/dashboard">Home</a> </li>
             </ul>
           </div>
         </div>
@@ -58,25 +58,8 @@
   <div class="row-fluid contact">  
 	<div class="span4">
 	  <ul class="bordered-list">
-		<li>Client:</b> Name of the client</li>
-        <li> 
-		<label for="pin"> List of currently planted crop </label>
-		<select>
-				  <option value="volvo">Volvo</option>
-				  <option value="saab">Saab</option>
-				  <option value="mercedes">Mercedes</option>
-				  <option value="audi">Audi</option>
-		</select>		
-		</li>
-		<li>
-		<label for="pin"> List of past crop </label>
-		<select>
-				  <option value="volvo">Volvo</option>
-				  <option value="saab">Saab</option>
-				  <option value="mercedes">Mercedes</option>
-				  <option value="audi">Audi</option>
-		</select>		
-		</li>
+    <li>Client Number:</b>{{ username }}</li>
+    <li>{{ info }}</li>
       </ul>
     </div>
     <div class="span6">
@@ -85,48 +68,47 @@
           <div id="output" class="alert"> </div>
           <div class="form-meta clearfix">
             <div class="formcol">
-			  <label for="crop_id"> Crop Name</label>
-					<select>
-					  <option value="volvo">Volvo</option>
-					  <option value="saab">Saab</option>
-					  <option value="mercedes">Mercedes</option>
-					  <option value="audi">Audi</option>
+        <label for="crop_var_id">Crop Name</label>
+					<select name="crop_var_id" id="crop_var_id">
+            {% for id, name, type in crop_details %}
+              <option value={{ id }}>{{ name }} - {{ type }}</option>
+            {% endfor %}
 					</select>
 			  <label for="weight_after_harvest">Weight After Harvest (KG)</label>
               <input type="text" name="weight_after_harvest" value="" id="weight_after_harvest" size="40" />
             </div>
             <div class="formcol">
 			  <label for="land_pin"> Land Area</label>
-					<select>
-					  <option value="volvo">Volvo</option>
-					  <option value="saab">Saab</option>
-					  <option value="mercedes">Mercedes</option>
-					  <option value="audi">Audi</option>
+					<select name="land_pin" id="land_pin">
+            {% for pin, area in pin_area_tuple %}
+              <option value={{ pin }}>{{ area }}</option>
+            {% endfor %}
 					</select>
-              <label for="quality_certi"> Quality Certificate Link</label>
-              <input type="text" name="lname" value="" id="lname" size="40" />	
+              <label for="quality_certi">Quality Certificate Link</label>
+              <input type="text" name="quality_certi" value="" id="quality_certi" size="40" />	
             </div>
 		  </div>
 			<div class="form-meta clearfix">
 				<div class="formcol">
 				  <label for="plant_date"> Plant Date </label>
-				  <input type="text" name="plant_date" value="" id="plant_date" size="40" />
+				  <input type="text" name="plant_date" value="" id="plant_date" size="40" placeholder="DD-MM-YYYY"/>
 				  <label for="quality_certi_date"> Quality Certificate Date</label>
-				  <input type="text" name="quality_certi_date" value="" id="quality_certi_date" size="40" />
+				  <input type="text" name="quality_certi_date" value="" id="quality_certi_date" size="40" placeholder="DD-MM-YYYY"/>
 				  <label for="land_owner_phone"> Owner Mobile No</label>
 				  <input type="text" name="land_owner_phone" value="" id="land_owner_phone" size="40" />
 				</div>
 				<div class="formcol">
 				  <label for="crop_harvest_date"> Harvest Date</label>
-				  <input type="text" name="crop_harvest_date" value="" id="crop_harvest_date" size="40" />	
+				  <input type="text" name="crop_harvest_date" value="" id="crop_harvest_date" size="40" placeholder="DD-MM-YYYY"/>	
 				  <label for="land_size"> Land size</label>
 				  <input type="text" name="land_size" value="" id="land_size" size="40" />
 				</div>
 		    </div>
           </div>
-		  <input type="submit" id="send-message" value="Add Crop" class="btn btn-success" />	
-          <input type="submit" id="send-message" value="Add Crop" class="btn btn-success" />	        
-		</form>
+
+          <button type="submit" class="btn btn-success">Submit</button>
+
+        </form>
       </div>
     </div>
   </div>
@@ -146,24 +128,24 @@
     ================================================== --> 
 <!-- Placed at the end of the document so the pages load faster --> 
 <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script> 
-<script src="../static/js/jquery.js"></script> 
-<script src="../static/js/google-code-prettify/prettify.js"></script> 
-<script src="../static/js/bootstrap-transition.js"></script> 
-<script src="../static/js/bootstrap-alert.js"></script> 
-<script src="../static/js/bootstrap-modal.js"></script> 
-<script src="../static/js/bootstrap-dropdown.js"></script> 
-<script src="../static/js/bootstrap-scrollspy.js"></script> 
-<script src="../static/js/bootstrap-tab.js"></script> 
-<script src="../static/js/bootstrap-tooltip.js"></script> 
-<script src="../static/js/bootstrap-popover.js"></script> 
-<script src="../static/js/bootstrap-button.js"></script> 
-<script src="../static/js/bootstrap-collapse.js"></script> 
-<script src="../static/js/bootstrap-carousel.js"></script> 
-<script src="../static/js/bootstrap-typeahead.js"></script> 
-<script src="../static/js/bootstrap-affix.js"></script> 
-<script src="../static/js/application.js"></script> 
-<script src="../static/js/contact.js" type="text/javascript"></script> 
-<script src="../static/js/superfish.js" type="text/javascript"></script> 
-<script src="../static/js/custom.js" type="text/javascript"></script>
+<script src="../../static/js/jquery.js"></script> 
+<script src="../../static/js/google-code-prettify/prettify.js"></script> 
+<script src="../../static/js/bootstrap-transition.js"></script> 
+<script src="../../static/js/bootstrap-alert.js"></script> 
+<script src="../../static/js/bootstrap-modal.js"></script> 
+<script src="../../static/js/bootstrap-dropdown.js"></script> 
+<script src="../../static/js/bootstrap-scrollspy.js"></script> 
+<script src="../../static/js/bootstrap-tab.js"></script> 
+<script src="../../static/js/bootstrap-tooltip.js"></script> 
+<script src="../../static/js/bootstrap-popover.js"></script> 
+<script src="../../static/js/bootstrap-button.js"></script> 
+<script src="../../static/js/bootstrap-collapse.js"></script> 
+<script src="../../static/js/bootstrap-carousel.js"></script> 
+<script src="../../static/js/bootstrap-typeahead.js"></script> 
+<script src="../../static/js/bootstrap-affix.js"></script> 
+<script src="../../static/js/application.js"></script> 
+<script src="../../static/js/contact.js" type="text/javascript"></script> 
+<script src="../../static/js/superfish.js" type="text/javascript"></script> 
+<script src="../../static/js/custom.js" type="text/javascript"></script>
 </body>
 </html>
